@@ -10,6 +10,7 @@ export default function ReviewFeedback() {
 
   const history = useHistory();
 
+  // POST request
   const submitFeedback = (feedback) => {
     console.log("submission:", feedback);
     axios
