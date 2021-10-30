@@ -1,11 +1,15 @@
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function Confirmation() {
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const handleClick = () => {
     dispatch({ type: "CLEAR_FEEDBACK" });
     // TODO route the user back to feeling page
+    history.push("/");
   };
   return (
     <div>

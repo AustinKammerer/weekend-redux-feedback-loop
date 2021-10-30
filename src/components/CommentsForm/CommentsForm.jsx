@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function CommentsForm() {
   // local state to store user input
@@ -7,11 +8,14 @@ export default function CommentsForm() {
 
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // dispatches an action and payload to the feedbackReducer
     dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
     setCommentsFeedback("");
+    history.push("/review");
   };
   return (
     <>

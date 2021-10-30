@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function SupportForm() {
   // local state to store user input
   const [supportFeedback, setSupportFeedback] = useState("");
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,6 +19,7 @@ export default function SupportForm() {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
       setSupportFeedback("");
+      history.push("/comments");
     }
   };
   return (

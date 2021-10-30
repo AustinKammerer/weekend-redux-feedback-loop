@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 export default function FeelingForm() {
-  // local state to store user input
-  const [feelingFeedback, setFeelingFeedback] = useState("");
+  // grab the feedbackReducer from the store
+  const feedback = useSelector((store) => store.feedbackReducer);
+  // access the current feeling value so the input field may be initialized with it
+  const currentFeeling = feedback.feeling;
+  // local state to store user input - initialized with currentFeeling
+  // allows the user to see their currentFeeling when returning to this view
+  // when the reducer is reset, the input field will also be reset
+  const [feelingFeedback, setFeelingFeedback] = useState(currentFeeling);
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,7 +25,7 @@ export default function FeelingForm() {
     } else if (feelingFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_FEELING", payload: feelingFeedback });
-      setFeelingFeedback("");
+      history.push("/understanding");
     }
   };
   return (
