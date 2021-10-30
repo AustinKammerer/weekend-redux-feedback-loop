@@ -1,10 +1,12 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 export default function ReviewFeedback() {
   // grab the feedback data from the store
   const feedback = useSelector((store) => store.feedbackReducer);
+
+  const dispatch = useDispatch();
 
   const history = useHistory();
 
@@ -26,6 +28,9 @@ export default function ReviewFeedback() {
 
   // CLICK CATEGORY TO RETURN AND CHANGE
   const updateAnswer = (path) => {
+    // sets isUpdatingReducer to true for conditional rendering/routing
+    dispatch({ type: "UPDATE" });
+    // direct the user to the view corresponding to what they clicked
     history.push(`/${path}`);
   };
 

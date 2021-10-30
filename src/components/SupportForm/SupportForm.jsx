@@ -5,12 +5,17 @@ import { useHistory } from "react-router-dom";
 export default function SupportForm() {
   // grab the feedbackReducer from the store
   const feedback = useSelector((store) => store.feedbackReducer);
-  // access the current support value so the input field may be initialized with it
+
+  // access the current support value so the input field may be initialized with it.
   const currentSupport = feedback.support;
-  // local state to store user input
-  // allows the user to see their currentSupport when returning to this view
-  // when the reducer is reset, the input field will also be reset
+
+  // determine if the user is updating via ReviewFeedback
+  const isUpdating = useSelector((store) => store.isUpdatingReducer);
+
+  // local state to store user input.
   const [supportFeedback, setSupportFeedback] = useState(currentSupport);
+  // allows the user to see their currentSupport when returning to this view.
+  // when the reducer is reset, the input field will also be reset.
 
   const dispatch = useDispatch();
 
@@ -24,10 +29,16 @@ export default function SupportForm() {
     } else if (supportFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
-      // direct the user to the next form
-      history.push("/comments");
+      if (!isUpdating) {
+        // direct the user to the next form if answering for the first time
+        history.push("/comments");
+      } else {
+        // direct the user back to ReviewFeedback if updating answer
+        history.push("/review");
+      }
     }
   };
+
   return (
     <>
       <h2>How well are you being supported today?</h2>
@@ -40,7 +51,7 @@ export default function SupportForm() {
           placeholder="support"
           onChange={(e) => setSupportFeedback(e.target.value)}
         />
-        <button type="submit">NEXT</button>
+        <button type="submit">{isUpdating ? "UPDATE" : "NEXT"}</button>
       </form>
     </>
   );

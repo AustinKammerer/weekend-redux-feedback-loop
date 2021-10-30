@@ -40,12 +40,22 @@ const feedbackReducer = (state = base, action) => {
   }
 };
 
+const isUpdatingReducer = (state = false, action) => {
+  switch (action.type) {
+    case "UPDATE":
+      return true;
+    default:
+      return state;
+  }
+};
+
 // TODO: ADMIN REDUCER
 
 // STORE CREATION
 const store = createStore(
   combineReducers({
     feedbackReducer,
+    isUpdatingReducer,
   }),
   applyMiddleware(logger)
 );

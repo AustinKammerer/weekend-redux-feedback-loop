@@ -7,10 +7,14 @@ export default function CommentsForm() {
   const feedback = useSelector((store) => store.feedbackReducer);
   // access the current comments value so the input field may be initialized with it
   const currentComments = feedback.comments;
+
+  // determine if the user is updating via ReviewFeedback
+  const isUpdating = useSelector((store) => store.isUpdatingReducer);
+
   // local state to store user input
+  const [commentsFeedback, setCommentsFeedback] = useState(currentComments);
   // allows the user to see their currentComments when returning to this view
   // when the reducer is reset, the input field will also be reset
-  const [commentsFeedback, setCommentsFeedback] = useState(currentComments);
 
   const dispatch = useDispatch();
 
@@ -18,11 +22,17 @@ export default function CommentsForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatches an action and payload to the feedbackReducer
-    dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
+    if (commentsFeedback === "") {
+      // if no comments are entered, payload is set to " " so conditional rendering will work
+      dispatch({ type: "ADD_COMMENTS", payload: " " });
+    } else {
+      // dispatches an action and payload to the feedbackReducer
+      dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
+    }
     // direct the user to review
     history.push("/review");
   };
+
   return (
     <>
       <h2>Any comments you'd like to leave?</h2>
@@ -35,7 +45,7 @@ export default function CommentsForm() {
           placeholder="comments"
           onChange={(e) => setCommentsFeedback(e.target.value)}
         />
-        <button type="submit">NEXT</button>
+        <button type="submit">{isUpdating ? "UPDATE" : "NEXT"}</button>
       </form>
     </>
   );

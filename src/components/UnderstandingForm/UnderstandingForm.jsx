@@ -3,15 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export default function UnderstandingForm() {
-  // grab the feedbackReducer from the store
+  // grab the feedbackReducer from the store.
   const feedback = useSelector((store) => store.feedbackReducer);
-  // access the current understanding value so the input field may be initialized with it
+
+  // access the current understanding value so the input field may be initialized with it.
   const currentUnderstanding = feedback.understanding;
-  // local state to store user input
-  // allows the user to see their currentUnderstanding when returning to this view
-  // when the reducer is reset, the input field will also be reset
+
+  // determine if the user is updating via ReviewFeedback
+  const isUpdating = useSelector((store) => store.isUpdatingReducer);
+
+  // local state to store user input.
   const [understandingFeedback, setUnderstandingFeedback] =
     useState(currentUnderstanding);
+  // allows the user to see their currentUnderstanding when returning to this view.
+  // when the reducer is reset, the input field will also be reset.
 
   const dispatch = useDispatch();
 
@@ -26,10 +31,16 @@ export default function UnderstandingForm() {
     } else if (understandingFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_UNDERSTANDING", payload: understandingFeedback });
-      // direct the user to the next form
-      history.push("/support");
+      if (!isUpdating) {
+        // direct the user to the next form if answering for the first time
+        history.push("/support");
+      } else {
+        // direct the user back to ReviewFeedback if updating answer
+        history.push("/review");
+      }
     }
   };
+
   return (
     <>
       <h2>How well are you understanding the content?</h2>
@@ -42,7 +53,7 @@ export default function UnderstandingForm() {
           placeholder="understanding"
           onChange={(e) => setUnderstandingFeedback(e.target.value)}
         />
-        <button type="submit">NEXT</button>
+        <button type="submit">{isUpdating ? "UPDATE" : "NEXT"}</button>
       </form>
     </>
   );
