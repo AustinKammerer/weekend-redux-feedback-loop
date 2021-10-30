@@ -24,15 +24,26 @@ export default function ReviewFeedback() {
       });
   };
 
-  // TODO: CLICK CATEGORY TO RETURN AND CHANGE
+  // CLICK CATEGORY TO RETURN AND CHANGE
+  const updateAnswer = (path) => {
+    history.push(`/${path}`);
+  };
 
   return (
     <>
       <h2>Review Your Feedback</h2>
-      <h3>Feelings: {feedback.feeling}</h3>
-      <h3>Understanding: {feedback.understanding}</h3>
-      <h3>Support: {feedback.support}</h3>
-      <h3>Comments: {feedback.comments}</h3>
+      <h3 onClick={() => updateAnswer("feeling")}>
+        Feelings: {feedback.feeling}
+      </h3>
+      <h3 onClick={() => updateAnswer("understanding")}>
+        Understanding: {feedback.understanding}
+      </h3>
+      <h3 onClick={() => updateAnswer("support")}>
+        Support: {feedback.support}
+      </h3>
+      <h3 onClick={() => updateAnswer("comments")}>
+        Comments: {feedback.comments}
+      </h3>
       <button onClick={() => submitFeedback(feedback)}>Submit</button>
     </>
   );
