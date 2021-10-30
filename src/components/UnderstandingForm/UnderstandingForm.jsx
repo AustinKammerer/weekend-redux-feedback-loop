@@ -35,8 +35,8 @@ export default function UnderstandingForm() {
         // direct the user to the next form if answering for the first time
         history.push("/support");
       } else {
+        // end update mode
         dispatch({ type: "END_UPDATE" });
-
         // direct the user back to ReviewFeedback if updating answer
         history.push("/review");
       }

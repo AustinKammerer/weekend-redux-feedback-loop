@@ -34,6 +34,7 @@ export default function FeelingForm() {
         // direct the user to the next form if answering for the first time
         history.push("/understanding");
       } else {
+        // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
         history.push("/review");

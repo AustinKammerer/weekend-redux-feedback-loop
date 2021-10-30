@@ -30,6 +30,7 @@ export default function CommentsForm() {
       dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
     }
     if (isUpdating) {
+      // end update mode
       dispatch({ type: "END_UPDATE" });
     }
     // direct the user to review

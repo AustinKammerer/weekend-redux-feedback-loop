@@ -10,9 +10,19 @@ export default function ReviewFeedback() {
 
   const history = useHistory();
 
+  // direct the user to the beginning if redux state is wiped (page refresh)
+  if (
+    feedback.feeling === "" &&
+    feedback.understanding === "" &&
+    feedback.support === ""
+  ) {
+    history.push("/");
+  }
+
   // POST request
   const submitFeedback = (feedback) => {
     console.log("submission:", feedback);
+    // only allow POST request if values are not empty
     if (
       feedback.feeling === "" ||
       feedback.understanding === "" ||
