@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function FeelingForm() {
   // local state to store user input
   const [feelingFeedback, setFeelingFeedback] = useState("");
-  // grab the feedbackReducer from the store so the input field clears on POST success
-  const feedback = useSelector((store) => store.feedbackReducer);
 
   const dispatch = useDispatch();
 
@@ -18,6 +16,7 @@ export default function FeelingForm() {
     } else if (feelingFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_FEELING", payload: feelingFeedback });
+      setFeelingFeedback("");
     }
   };
   return (
@@ -25,7 +24,7 @@ export default function FeelingForm() {
       <h2>How are you feeling today?</h2>
       <form onSubmit={handleSubmit}>
         <input
-          value={feedback.feeling}
+          value={feelingFeedback}
           type="text"
           id="feelingFeedback"
           name="feeling"

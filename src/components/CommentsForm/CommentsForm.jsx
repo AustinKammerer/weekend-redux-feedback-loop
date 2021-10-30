@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function CommentsForm() {
   // local state to store user input
   const [commentsFeedback, setCommentsFeedback] = useState("");
-  // grab the feedbackReducer from the store so the input field clears on POST success
-  const feedback = useSelector((store) => store.feedbackReducer);
 
   const dispatch = useDispatch();
 
@@ -13,13 +11,14 @@ export default function CommentsForm() {
     e.preventDefault();
     // dispatches an action and payload to the feedbackReducer
     dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
+    setCommentsFeedback("");
   };
   return (
     <>
       <h2>Any comments you'd like to leave?</h2>
       <form onSubmit={handleSubmit}>
         <input
-          value={feedback.comments}
+          value={commentsFeedback}
           type="text"
           id="commentsFeedback"
           name="comments"

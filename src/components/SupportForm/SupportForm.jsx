@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function SupportForm() {
   // local state to store user input
   const [supportFeedback, setSupportFeedback] = useState("");
-  // grab the feedbackReducer from the store so the input field clears on POST success
-  const feedback = useSelector((store) => store.feedbackReducer);
 
   const dispatch = useDispatch();
 
@@ -17,6 +15,7 @@ export default function SupportForm() {
     } else if (supportFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
+      setSupportFeedback("");
     }
   };
   return (
@@ -24,7 +23,7 @@ export default function SupportForm() {
       <h2>How well are you being supported today?</h2>
       <form onSubmit={handleSubmit}>
         <input
-          value={feedback.support}
+          value={supportFeedback}
           type="text"
           id="supportFeedback"
           name="support"

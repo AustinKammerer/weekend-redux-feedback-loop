@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function UnderstandingForm() {
   // local state to store user input
   const [understandingFeedback, setUnderstandingFeedback] = useState("");
-  // grab the feedbackReducer from the store so the input field clears on POST success
-  const feedback = useSelector((store) => store.feedbackReducer);
 
   const dispatch = useDispatch();
 
@@ -18,6 +16,7 @@ export default function UnderstandingForm() {
     } else if (understandingFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_UNDERSTANDING", payload: understandingFeedback });
+      setUnderstandingFeedback("");
     }
   };
   return (
@@ -25,7 +24,7 @@ export default function UnderstandingForm() {
       <h2>How well are you understanding the content?</h2>
       <form onSubmit={handleSubmit}>
         <input
-          value={feedback.understanding}
+          value={understandingFeedback}
           type="text"
           id="understandingFeedback"
           name="understanding"
