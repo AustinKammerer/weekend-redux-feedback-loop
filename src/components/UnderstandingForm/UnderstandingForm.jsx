@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export default function UnderstandingForm() {
+  // grab the feedbackReducer from the store
+  const feedback = useSelector((store) => store.feedbackReducer);
+  // access the current understanding value so the input field may be initialized with it
+  const currentUnderstanding = feedback.understanding;
   // local state to store user input
-  const [understandingFeedback, setUnderstandingFeedback] = useState("");
+  // allows the user to see their currentUnderstanding when returning to this view
+  // when the reducer is reset, the input field will also be reset
+  const [understandingFeedback, setUnderstandingFeedback] =
+    useState(currentUnderstanding);
 
   const dispatch = useDispatch();
 
@@ -19,7 +26,7 @@ export default function UnderstandingForm() {
     } else if (understandingFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_UNDERSTANDING", payload: understandingFeedback });
-      setUnderstandingFeedback("");
+      // direct the user to the next form
       history.push("/support");
     }
   };

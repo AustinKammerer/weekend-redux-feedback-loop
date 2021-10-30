@@ -14,6 +14,7 @@ export default function ReviewFeedback() {
       .post("/api/feedback", feedback)
       .then((response) => {
         console.log("Successful POST");
+        // direct user back to the confirmation view on successful POST
         history.push("/confirmation");
         // STRETCH TODO: call a GET for ADMIN
       })
@@ -23,7 +24,6 @@ export default function ReviewFeedback() {
       });
   };
 
-  // when 'Submit' is clicked, call the POST request function that App passed as a prop
   return (
     <>
       <h2>Review Your Feedback</h2>
@@ -31,14 +31,7 @@ export default function ReviewFeedback() {
       <h3>Understanding: {feedback.understanding}</h3>
       <h3>Support: {feedback.support}</h3>
       <h3>Comments: {feedback.comments}</h3>
-      <button
-        onClick={() => {
-          submitFeedback(feedback);
-          //   history.push("/confirmation");
-        }}
-      >
-        Submit
-      </button>
+      <button onClick={() => submitFeedback(feedback)}>Submit</button>
     </>
   );
 }

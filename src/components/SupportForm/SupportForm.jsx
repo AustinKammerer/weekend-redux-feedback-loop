@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export default function SupportForm() {
+  // grab the feedbackReducer from the store
+  const feedback = useSelector((store) => store.feedbackReducer);
+  // access the current support value so the input field may be initialized with it
+  const currentSupport = feedback.support;
   // local state to store user input
-  const [supportFeedback, setSupportFeedback] = useState("");
+  // allows the user to see their currentSupport when returning to this view
+  // when the reducer is reset, the input field will also be reset
+  const [supportFeedback, setSupportFeedback] = useState(currentSupport);
 
   const dispatch = useDispatch();
 
@@ -18,7 +24,7 @@ export default function SupportForm() {
     } else if (supportFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
-      setSupportFeedback("");
+      // direct the user to the next form
       history.push("/comments");
     }
   };

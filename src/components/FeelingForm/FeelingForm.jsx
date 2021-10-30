@@ -25,6 +25,7 @@ export default function FeelingForm() {
     } else if (feelingFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_FEELING", payload: feelingFeedback });
+      // direct the user to the next form
       history.push("/understanding");
     }
   };
