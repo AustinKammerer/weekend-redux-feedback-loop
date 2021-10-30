@@ -6,11 +6,9 @@ import UnderstandingForm from "../UnderstandingForm/UnderstandingForm.jsx";
 import SupportForm from "../SupportForm/SupportForm.jsx";
 import CommentsForm from "../CommentsForm/CommentsForm.jsx";
 import ReviewFeedback from "../ReviewFeedback/ReviewFeedback.jsx";
-import { useDispatch } from "react-redux";
+import Confirmation from "../Confirmation/Confirmation.jsx";
 
 function App() {
-  const dispatch = useDispatch();
-
   // POST request for submitting feedback to the database
   const submitFeedback = (feedback) => {
     console.log("submission:", feedback);
@@ -18,8 +16,7 @@ function App() {
       .post("/api/feedback", feedback)
       .then((response) => {
         console.log("Successful POST");
-        // if successful, clear the feedbackReducer
-        dispatch({ type: "CLEAR_FEEDBACK" });
+        // STRETCH TODO: call a GET for ADMIN
       })
       .catch((err) => {
         console.log("Error in POST", err);
@@ -38,6 +35,7 @@ function App() {
       <SupportForm />
       <CommentsForm />
       <ReviewFeedback submitFeedback={submitFeedback} />
+      <Confirmation />
     </div>
   );
 }
