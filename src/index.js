@@ -40,6 +40,8 @@ const feedbackReducer = (state = base, action) => {
   }
 };
 
+// TODO: ADMIN REDUCER
+
 // STORE CREATION
 const store = createStore(
   combineReducers({
