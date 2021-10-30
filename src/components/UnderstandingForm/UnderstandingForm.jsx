@@ -14,7 +14,7 @@ export default function UnderstandingForm() {
   };
   return (
     <>
-      <h2>How are you understanding today?</h2>
+      <h2>How well are you understanding the content?</h2>
       <form onSubmit={handleSubmit}>
         <input
           value={understandingFeedback}
