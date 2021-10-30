@@ -40,6 +40,7 @@ const feedbackReducer = (state = base, action) => {
   }
 };
 
+// UPDATE REDUCER - so forms know if the user is updating (conditional rendering/routing)
 const isUpdatingReducer = (state = false, action) => {
   switch (action.type) {
     case "UPDATE":
