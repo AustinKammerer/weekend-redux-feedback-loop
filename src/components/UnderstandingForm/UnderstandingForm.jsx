@@ -9,8 +9,14 @@ export default function UnderstandingForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatches an action and payload to the feedbackReducer
-    dispatch({ type: "ADD_UNDERSTANDING", payload: understandingFeedback });
+    // validation (input required)
+    if (understandingFeedback === "") {
+      // alert if no feedback is entered
+      alert("Please enter your feedback");
+    } else if (understandingFeedback !== "") {
+      // dispatches an action and payload to the feedbackReducer
+      dispatch({ type: "ADD_UNDERSTANDING", payload: understandingFeedback });
+    }
   };
   return (
     <>

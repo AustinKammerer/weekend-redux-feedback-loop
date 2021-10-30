@@ -9,8 +9,14 @@ export default function FeelingForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatches an action and payload to the feedbackReducer
-    dispatch({ type: "ADD_FEELING", payload: feelingFeedback });
+    // validation (input required)
+    if (feelingFeedback === "") {
+      // alert if no feedback is entered
+      alert("Please enter your feedback");
+    } else if (feelingFeedback !== "") {
+      // dispatches an action and payload to the feedbackReducer
+      dispatch({ type: "ADD_FEELING", payload: feelingFeedback });
+    }
   };
   return (
     <>

@@ -9,8 +9,13 @@ export default function SupportForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatches an action and payload to the feedbackReducer
-    dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
+    if (supportFeedback === "") {
+      // alert if no feedback is entered
+      alert("Please enter your feedback");
+    } else if (supportFeedback !== "") {
+      // dispatches an action and payload to the feedbackReducer
+      dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
+    }
   };
   return (
     <>
