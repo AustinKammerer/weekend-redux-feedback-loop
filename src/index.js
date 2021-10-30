@@ -40,24 +40,10 @@ const feedbackReducer = (state = base, action) => {
   }
 };
 
-// ADMIN REDUCER
-// for storing the database data in the store
-const adminReducer = (state = [], action) => {
-  switch (action.type) {
-    // dispatched by client GET request function (gets feedback entries from database)
-    case "STORE_FEEDBACK":
-      return action.payload;
-    // default for when nothing is dispatched
-    default:
-      return state;
-  }
-};
-
 // STORE CREATION
 const store = createStore(
   combineReducers({
     feedbackReducer,
-    adminReducer,
   }),
   applyMiddleware(logger)
 );
