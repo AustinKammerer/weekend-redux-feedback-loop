@@ -10,7 +10,7 @@ export default function SupportForm() {
   const currentSupport = feedback.support;
 
   // determine if the user is updating via ReviewFeedback
-  const isUpdating = useSelector((store) => store.isUpdatingReducer);
+  const isUpdating = useSelector((store) => store.updateModeReducer);
 
   // local state to store user input.
   const [supportFeedback, setSupportFeedback] = useState(currentSupport);
@@ -33,6 +33,8 @@ export default function SupportForm() {
         // direct the user to the next form if answering for the first time
         history.push("/comments");
       } else {
+        dispatch({ type: "END_UPDATE" });
+
         // direct the user back to ReviewFeedback if updating answer
         history.push("/review");
       }

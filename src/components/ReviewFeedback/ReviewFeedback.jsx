@@ -13,23 +13,33 @@ export default function ReviewFeedback() {
   // POST request
   const submitFeedback = (feedback) => {
     console.log("submission:", feedback);
-    axios
-      .post("/api/feedback", feedback)
-      .then((response) => {
-        console.log("Successful POST");
-        // direct user back to the confirmation view on successful POST
-        history.push("/confirmation");
-        // STRETCH TODO: call a GET for ADMIN
-      })
-      .catch((err) => {
-        console.log("Error in POST", err);
-        alert("Error adding feedback to the database");
-      });
+    if (
+      feedback.feeling === "" ||
+      feedback.understanding === "" ||
+      feedback.support === ""
+    ) {
+      alert(
+        "Please Update Feedback (Feeling, Understanding, Support Are Required!"
+      );
+    } else {
+      axios
+        .post("/api/feedback", feedback)
+        .then((response) => {
+          console.log("Successful POST");
+          // direct user back to the confirmation view on successful POST
+          history.push("/confirmation");
+          // STRETCH TODO: call a GET for ADMIN
+        })
+        .catch((err) => {
+          console.log("Error in POST", err);
+          alert("Error adding feedback to the database");
+        });
+    }
   };
 
   // CLICK CATEGORY TO RETURN AND CHANGE
   const updateAnswer = (path) => {
-    // sets isUpdatingReducer to true for conditional rendering/routing
+    // sets updateModeReducer to true for conditional rendering/routing
     dispatch({ type: "UPDATE" });
     // direct the user to the view corresponding to what they clicked
     history.push(`/${path}`);

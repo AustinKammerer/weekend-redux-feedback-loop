@@ -9,7 +9,7 @@ export default function CommentsForm() {
   const currentComments = feedback.comments;
 
   // determine if the user is updating via ReviewFeedback
-  const isUpdating = useSelector((store) => store.isUpdatingReducer);
+  const isUpdating = useSelector((store) => store.updateModeReducer);
 
   // local state to store user input
   const [commentsFeedback, setCommentsFeedback] = useState(currentComments);
@@ -28,6 +28,9 @@ export default function CommentsForm() {
     } else {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
+    }
+    if (isUpdating) {
+      dispatch({ type: "END_UPDATE" });
     }
     // direct the user to review
     history.push("/review");

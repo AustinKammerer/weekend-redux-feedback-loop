@@ -7,7 +7,7 @@ export default function FeelingForm() {
   const feedback = useSelector((store) => store.feedbackReducer);
 
   // determine if the user is updating via ReviewFeedback
-  const isUpdating = useSelector((store) => store.isUpdatingReducer);
+  const isUpdating = useSelector((store) => store.updateModeReducer);
 
   // access the current feeling state so the input field may be initialized with it.
   const currentFeeling = feedback.feeling;
@@ -34,6 +34,7 @@ export default function FeelingForm() {
         // direct the user to the next form if answering for the first time
         history.push("/understanding");
       } else {
+        dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
         history.push("/review");
       }

@@ -10,7 +10,7 @@ export default function UnderstandingForm() {
   const currentUnderstanding = feedback.understanding;
 
   // determine if the user is updating via ReviewFeedback
-  const isUpdating = useSelector((store) => store.isUpdatingReducer);
+  const isUpdating = useSelector((store) => store.updateModeReducer);
 
   // local state to store user input.
   const [understandingFeedback, setUnderstandingFeedback] =
@@ -35,6 +35,8 @@ export default function UnderstandingForm() {
         // direct the user to the next form if answering for the first time
         history.push("/support");
       } else {
+        dispatch({ type: "END_UPDATE" });
+
         // direct the user back to ReviewFeedback if updating answer
         history.push("/review");
       }
