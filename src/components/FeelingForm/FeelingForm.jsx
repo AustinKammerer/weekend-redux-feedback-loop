@@ -9,6 +9,7 @@ export default function FeelingForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // dispatches an action and payload to the feedbackReducer
     dispatch({ type: "ADD_FEELING", payload: feelingFeedback });
   };
   return (

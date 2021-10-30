@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import "./App.css";
 import FeelingForm from "../FeelingForm/FeelingForm.jsx";
+import UnderstandingForm from "../UnderstandingForm/UnderstandingForm.jsx";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <h4>Don't forget it!</h4>
       </header>
       <FeelingForm />
+      <UnderstandingForm />
     </div>
   );
 }
