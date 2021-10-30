@@ -4,6 +4,7 @@ import "./App.css";
 import FeelingForm from "../FeelingForm/FeelingForm.jsx";
 import UnderstandingForm from "../UnderstandingForm/UnderstandingForm.jsx";
 import SupportForm from "../SupportForm/SupportForm.jsx";
+import CommentsForm from "../CommentsForm/CommentsForm.jsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <FeelingForm />
       <UnderstandingForm />
       <SupportForm />
+      <CommentsForm />
     </div>
   );
 }
