@@ -9,6 +9,8 @@ import ReviewFeedback from "../ReviewFeedback/ReviewFeedback.jsx";
 import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+
   // POST request for submitting feedback to the database
   const submitFeedback = (feedback) => {
     console.log("submission:", feedback);
