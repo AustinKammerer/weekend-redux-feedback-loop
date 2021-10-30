@@ -40,12 +40,26 @@ const feedbackReducer = (state = base, action) => {
   }
 };
 
+// UPDATE REDUCER - so forms know if the user is updating (conditional rendering/routing)
+const updateModeReducer = (state = false, action) => {
+  switch (action.type) {
+    // flips truthyness when the user clicks a category in ReviewFeedback
+    case "UPDATE":
+      return true;
+    case "END_UPDATE":
+      return false;
+    default:
+      return state;
+  }
+};
+
 // TODO: ADMIN REDUCER
 
 // STORE CREATION
 const store = createStore(
   combineReducers({
     feedbackReducer,
+    updateModeReducer,
   }),
   applyMiddleware(logger)
 );
