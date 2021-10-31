@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import { blue } from "@mui/material/colors";
 
 export default function FeelingForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store.
@@ -64,6 +66,7 @@ export default function FeelingForm({ funcsFromStepper }) {
           justifyContent="center"
           alignItems="center"
         >
+          <InsertEmoticonIcon sx={{ color: blue[700], mr: 1 }} />
           <TextField
             autoFocus={true}
             variant="outlined"

@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { blue } from "@mui/material/colors";
 
 export default function SupportForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store
@@ -70,6 +72,7 @@ export default function SupportForm({ funcsFromStepper }) {
           justifyContent="center"
           alignItems="center"
         >
+          <FavoriteIcon sx={{ color: blue[700], mr: 1 }} />
           <TextField
             autoFocus={true}
             variant="outlined"

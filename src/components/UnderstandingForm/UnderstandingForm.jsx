@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import LightbulbIcon from "@mui/icons-material/Lightbulb";
+import { blue } from "@mui/material/colors";
 
 export default function UnderstandingForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store.
@@ -72,6 +74,7 @@ export default function UnderstandingForm({ funcsFromStepper }) {
           justifyContent="center"
           alignItems="center"
         >
+          <LightbulbIcon sx={{ color: blue[700], mr: 1 }} />
           <TextField
             autoFocus={true}
             variant="outlined"

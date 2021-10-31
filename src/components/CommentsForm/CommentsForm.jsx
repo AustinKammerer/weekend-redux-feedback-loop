@@ -8,6 +8,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import CommentIcon from "@mui/icons-material/Comment";
+import { blue } from "@mui/material/colors";
 
 export default function CommentsForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store
@@ -70,6 +72,7 @@ export default function CommentsForm({ funcsFromStepper }) {
           justifyContent="center"
           alignItems="center"
         >
+          <CommentIcon sx={{ color: blue[700], mr: 1 }} />
           <TextField
             autoFocus={true}
             variant="outlined"

@@ -1,3 +1,4 @@
+import "./Header.css";
 import Typography from "@mui/material/Typography";
 
 export default function Header() {

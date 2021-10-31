@@ -21,9 +21,7 @@ export default function Confirmation({ funcsFromStepper }) {
   return (
     <Box width="550px" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
-        <Typography variant="h4" fontStyle="normal">
-          Thank You!
-        </Typography>
+        <Typography variant="h4">Thank You!</Typography>
         <Typography variant="h5" mt={3}>
           Your Feedback Has Been Received
         </Typography>
