@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, Route } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import Typography from "@mui/material/Typography";
@@ -12,13 +12,16 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import { blue } from "@mui/material/colors";
 
-export default function ReviewFeedback({ handleComplete, setActiveStep }) {
+export default function ReviewFeedback({ getPage }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  // send the current page's pathname to the store
+  getPage(location.pathname);
+
   // grab the feedback data from the store
   const feedback = useSelector((store) => store.feedbackReducer);
-
-  const dispatch = useDispatch();
-
-  const history = useHistory();
 
   // direct the user to the beginning if redux state is wiped (page refresh)
   if (
@@ -47,7 +50,9 @@ export default function ReviewFeedback({ handleComplete, setActiveStep }) {
         .then((response) => {
           console.log("Successful POST");
           // move the Stepper forward
-          handleComplete();
+          //   handleComplete();
+          // update the stepReducer
+          dispatch({ type: "INCREMENT_STEP" });
           // direct user back to the confirmation view on successful POST
           history.push("/confirmation");
           // STRETCH TODO: call a GET for ADMIN
@@ -64,7 +69,7 @@ export default function ReviewFeedback({ handleComplete, setActiveStep }) {
     // sets updateModeReducer to true for conditional rendering/routing
     dispatch({ type: "UPDATE" });
 
-    setActiveStep(step);
+    // setActiveStep(step);
 
     // direct the user to the view corresponding to what they clicked
     history.push(`/${path}`);

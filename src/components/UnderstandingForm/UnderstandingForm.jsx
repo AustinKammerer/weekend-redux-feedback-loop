@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,7 +10,14 @@ import Paper from "@mui/material/Paper";
 import LightbulbIcon from "@mui/icons-material/Lightbulb";
 import { blue } from "@mui/material/colors";
 
-export default function UnderstandingForm({ handleComplete, setActiveStep }) {
+export default function UnderstandingForm({ getPage }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  // send the current page's pathname to the store
+  getPage(location.pathname);
+
   // grab the feedbackReducer from the store.
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -26,10 +32,6 @@ export default function UnderstandingForm({ handleComplete, setActiveStep }) {
     useState(currentUnderstanding);
   // allows the user to see their currentUnderstanding when returning to this view.
   // when the reducer is reset, the input field will also be reset.
-
-  const dispatch = useDispatch();
-
-  const history = useHistory();
 
   // keep current view and Stepper in sync in case of redux state reset
   if (feedback.feeling === "") {
@@ -48,14 +50,16 @@ export default function UnderstandingForm({ handleComplete, setActiveStep }) {
       // check if in update mode
       if (!isUpdating) {
         // move the Stepper forward
-        handleComplete();
+        // handleComplete();
+        // update the stepReducer
+        dispatch({ type: "INCREMENT_STEP" });
         // direct the user to the next form if answering for the first time
         history.push("/support");
       } else {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
-        setActiveStep(4);
+        // setActiveStep(4);
         history.push("/review");
       }
     }

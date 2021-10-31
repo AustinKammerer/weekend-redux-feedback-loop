@@ -60,6 +60,22 @@ const pathReducer = (state = "/feeling", action) => {
   return state;
 };
 
+const stepReducer = (state = 1, action) => {
+  switch (action.type) {
+    case "INCREMENT_STEP":
+      return state + 1;
+    case "DECREMENT_STEP":
+      return state - 1;
+    // case "UPDATE":
+    //   return action.payload;
+    // case "END_UPDATE":
+    //   return 5;
+    case "CLEAR_FEEDBACK":
+      return 1;
+  }
+  return state;
+};
+
 // TODO: ADMIN REDUCER
 
 // STORE CREATION
@@ -68,6 +84,7 @@ const store = createStore(
     feedbackReducer,
     updateModeReducer,
     pathReducer,
+    stepReducer,
   }),
   applyMiddleware(logger)
 );

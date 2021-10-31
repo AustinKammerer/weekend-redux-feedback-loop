@@ -9,59 +9,49 @@ import SupportForm from "../SupportForm/SupportForm.jsx";
 import CommentsForm from "../CommentsForm/CommentsForm.jsx";
 import ReviewFeedback from "../ReviewFeedback/ReviewFeedback.jsx";
 import Confirmation from "../Confirmation/Confirmation.jsx";
-import StepperComponent from "../StepperComponent/StepperComponent.jsx";
 import Header from "../Header/Header.jsx";
 // HOOKS
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 // MUI COMPONENTS
 import Box from "@mui/material/Box";
 
-import StepperTest from "../StepperComponent/StepperTest.jsx";
-
 function App() {
-  // // functions in the StepperComponent need to be sent to the other components in order for the Stepper to work
-  // const [funcsFromStepper, setFuncsFromStepper] = useState({});
-  // // this function is sent to StepperComponent so the needed functions can be passed from here:
-  // const getStepperFuncs = (stepperFunctions) =>
-  //   setFuncsFromStepper(stepperFunctions);
+  const dispatch = useDispatch();
+  // function to store the current page pathname - passed via props to components
+  const getPage = (path) =>
+    useEffect(() => {
+      dispatch({ type: "CHANGE_PAGE", payload: path });
+    }, []);
 
   return (
-    // <Router>
-    //   <Box sx={{ width: "100%" }}>
-    //     <div className="App">
-    //       <Header />
-    //       <StepperComponent getStepperFuncs={getStepperFuncs} />
-    //       <Route exact path="/">
-    //         <Redirect to={{ pathname: "/feeling" }} />
-    //       </Route>
-    //       <Route path="/feeling">
-    //         <FeelingForm funcsFromStepper={funcsFromStepper} />
-    //       </Route>
-    //       <Route path="/understanding">
-    //         <UnderstandingForm funcsFromStepper={funcsFromStepper} />
-    //       </Route>
-    //       <Route path="/support">
-    //         <SupportForm funcsFromStepper={funcsFromStepper} />
-    //       </Route>
-    //       <Route path="/comments">
-    //         <CommentsForm funcsFromStepper={funcsFromStepper} />
-    //       </Route>
-    //       <Route path="/review">
-    //         <ReviewFeedback funcsFromStepper={funcsFromStepper} />
-    //       </Route>
-    //       <Route path="/confirmation">
-    //         <Confirmation funcsFromStepper={funcsFromStepper} />
-    //       </Route>
-    //     </div>
-    //   </Box>
-    // </Router>
     <Router>
-      <Route exact path="/">
-        <Redirect to={{ pathname: "/feeling" }} />
-      </Route>
-      <StepperTest />
+      <Box sx={{ width: "100%" }}>
+        <div className="App">
+          <Header />
+          <Route exact path="/">
+            <Redirect to={{ pathname: "/feeling" }} />
+          </Route>
+          <Route path="/feeling">
+            <FeelingForm getPage={getPage} />
+          </Route>
+          <Route path="/understanding">
+            <UnderstandingForm getPage={getPage} />
+          </Route>
+          <Route path="/support">
+            <SupportForm getPage={getPage} />
+          </Route>
+          <Route path="/comments">
+            <CommentsForm getPage={getPage} />
+          </Route>
+          <Route path="/review">
+            <ReviewFeedback getPage={getPage} />
+          </Route>
+          <Route path="/confirmation">
+            <Confirmation getPage={getPage} />
+          </Route>
+        </div>
+      </Box>
     </Router>
   );
 }

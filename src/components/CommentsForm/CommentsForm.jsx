@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -10,9 +10,17 @@ import Paper from "@mui/material/Paper";
 import CommentIcon from "@mui/icons-material/Comment";
 import { blue } from "@mui/material/colors";
 
-export default function CommentsForm({ handleComplete, setActiveStep }) {
+export default function CommentsForm({ getPage }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  // send the current page's pathname to the store
+  getPage(location.pathname);
+
   // grab the feedbackReducer from the store
   const feedback = useSelector((store) => store.feedbackReducer);
+
   // access the current comments value so the input field may be initialized with it
   const currentComments = feedback.comments;
 
@@ -23,10 +31,6 @@ export default function CommentsForm({ handleComplete, setActiveStep }) {
   const [commentsFeedback, setCommentsFeedback] = useState(currentComments);
   // allows the user to see their currentComments when returning to this view
   // when the reducer is reset, the input field will also be reset
-
-  const dispatch = useDispatch();
-
-  const history = useHistory();
 
   // keep current view and Stepper in sync in case of redux state reset
   if (feedback.feeling === "") {
@@ -44,11 +48,13 @@ export default function CommentsForm({ handleComplete, setActiveStep }) {
     // }
     if (!isUpdating) {
       // move the Stepper forward
-      handleComplete();
+      //   handleComplete();
+      // update the stepReducer
+      dispatch({ type: "INCREMENT_STEP" });
     } else {
       // end update mode
       dispatch({ type: "END_UPDATE" });
-      setActiveStep(4);
+      //   setActiveStep(4);
     }
     // direct the user to review
     history.push("/review");

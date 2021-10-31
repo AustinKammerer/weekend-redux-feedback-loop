@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -11,7 +11,14 @@ import Paper from "@mui/material/Paper";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { blue } from "@mui/material/colors";
 
-export default function SupportForm({ handleComplete, setActiveStep }) {
+export default function SupportForm({ getPage }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  // send the current page's pathname to the store
+  getPage(location.pathname);
+
   // grab the feedbackReducer from the store
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -25,10 +32,6 @@ export default function SupportForm({ handleComplete, setActiveStep }) {
   const [supportFeedback, setSupportFeedback] = useState(currentSupport);
   // allows the user to see their currentSupport when returning to this view.
   // when the reducer is reset, the input field will also be reset.
-
-  const dispatch = useDispatch();
-
-  const history = useHistory();
 
   // keep current view and Stepper in sync in case of redux state reset
   if (feedback.feeling === "") {
@@ -46,14 +49,16 @@ export default function SupportForm({ handleComplete, setActiveStep }) {
       // check if in update mode
       if (!isUpdating) {
         // move the Stepper forward
-        handleComplete();
+        // handleComplete();
+        // update the step reducer
+        dispatch({ type: "INCREMENT_STEP" });
         // direct the user to the next form if answering for the first time
         history.push("/comments");
       } else {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
-        setActiveStep(4);
+        // setActiveStep(4);
         history.push("/review");
       }
     }

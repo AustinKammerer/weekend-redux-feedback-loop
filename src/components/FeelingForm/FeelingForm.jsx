@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,15 +10,17 @@ import Paper from "@mui/material/Paper";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import { blue } from "@mui/material/colors";
 
-export default function FeelingForm({ handleComplete, setActiveStep }) {
+export default function FeelingForm({ getPage }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
 
-  dispatch({ type: "CHANGE_PAGE", payload: "/feeling" });
+  // send the current page's pathname to the store
+  getPage(location.pathname);
 
   // grab the feedbackReducer from the store.
   const feedback = useSelector((store) => store.feedbackReducer);
-  const params = useParams();
+
   // determine if the user is updating via ReviewFeedback
   const isUpdating = useSelector((store) => store.updateModeReducer);
 
@@ -43,21 +44,21 @@ export default function FeelingForm({ handleComplete, setActiveStep }) {
       // check if in update mode
       if (!isUpdating) {
         // move the Stepper forward
-        handleComplete();
+        // handleComplete();
         dispatch({ type: "CHANGE_PAGE", payload: "/understanding" });
-
+        // update the step reducer
+        dispatch({ type: "INCREMENT_STEP" });
         // direct the user to the next form if answering for the first time
         history.push("/understanding");
       } else {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
-        setActiveStep(4);
+        // setActiveStep(4);
         history.push("/review");
       }
     }
   };
-  console.log(params);
   return (
     <Box width="550px" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
