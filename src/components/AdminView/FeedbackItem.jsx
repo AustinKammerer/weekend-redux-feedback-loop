@@ -4,6 +4,7 @@ import TableRow from "@mui/material/TableRow";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Button from "@mui/material/Button";
 
+// custom table cell and row functions taken from https://mui.com/components/tables/
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -24,7 +25,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function FeedbackItem({ feedback }) {
+export default function FeedbackItem({ feedback, deleteFeedback }) {
+  // this component has access to the database information for the feedback item
+
   return (
     <StyledTableRow key={feedback.id}>
       <StyledTableCell component="th" scope="row">
@@ -34,7 +37,7 @@ export default function FeedbackItem({ feedback }) {
       <StyledTableCell>{feedback.support}</StyledTableCell>
       <StyledTableCell>{feedback.comments}</StyledTableCell>
       <StyledTableCell size="small">
-        <Button>
+        <Button onClick={() => deleteFeedback(feedback.id)}>
           <DeleteOutlineIcon />
         </Button>
       </StyledTableCell>

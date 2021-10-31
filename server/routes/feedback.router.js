@@ -44,4 +44,21 @@ router.get("/", (req, res) => {
     });
 });
 
+// DELETE ROUTE
+router.delete("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(`DELETE request at /api/feedback/delete/${id}`);
+  const queryText = `DELETE FROM "feedback" WHERE "id" = $1;`;
+  pool
+    .query(queryText, [id])
+    .then((result) => {
+      console.log("Feedback successfully deleted from database");
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log(`Error making query ${queryText}:`, err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;

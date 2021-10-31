@@ -52,6 +52,19 @@ export default function AdminView({ getPage }) {
       });
   };
 
+  const deleteFeedback = (id) => {
+    axios
+      .delete(`/api/feedback/delete/${id}`)
+      .then((res) => {
+        console.log("Feedback deleted successfully");
+        getFeedback();
+      })
+      .catch((err) => {
+        console.log("Error deleting feedback from the database", err);
+        alert("Unable to delete feedback!");
+      });
+  };
+
   const allFeedback = useSelector((store) => store.adminReducer);
 
   return (
@@ -74,7 +87,11 @@ export default function AdminView({ getPage }) {
           </TableHead>
           <TableBody>
             {allFeedback.map((feedback, i) => (
-              <FeedbackItem key={i} feedback={feedback} />
+              <FeedbackItem
+                key={i}
+                feedback={feedback}
+                deleteFeedback={deleteFeedback}
+              />
             ))}
           </TableBody>
         </Table>
