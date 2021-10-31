@@ -1,8 +1,24 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
-export default function SupportForm() {
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { blue } from "@mui/material/colors";
+
+export default function SupportForm({ getPage }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  // send the current page's pathname to the store
+  getPage(location.pathname);
+
   // grab the feedbackReducer from the store
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -17,9 +33,10 @@ export default function SupportForm() {
   // allows the user to see their currentSupport when returning to this view.
   // when the reducer is reset, the input field will also be reset.
 
-  const dispatch = useDispatch();
-
-  const history = useHistory();
+  // keep current view and Stepper in sync in case of redux state reset
+  if (feedback.feeling === "") {
+    history.push("/");
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,32 +46,55 @@ export default function SupportForm() {
     } else if (supportFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
+      // check if in update mode
       if (!isUpdating) {
+        // move the Stepper forward
+        // handleComplete();
+        // update the step reducer
+        dispatch({ type: "INCREMENT_STEP" });
         // direct the user to the next form if answering for the first time
         history.push("/comments");
       } else {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
+        // setActiveStep(4);
         history.push("/review");
       }
     }
   };
 
   return (
-    <>
-      <h2>How well are you being supported today?</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={supportFeedback}
-          type="text"
-          id="supportFeedback"
-          name="support"
-          placeholder="support"
-          onChange={(e) => setSupportFeedback(e.target.value)}
-        />
-        <button type="submit">{isUpdating ? "UPDATE" : "NEXT"}</button>
-      </form>
-    </>
+    <Box width="550px" ml="auto" mr="auto">
+      <Paper elevation={3} sx={{ padding: "2rem" }}>
+        <Typography variant="h5">
+          How well are you being supported today?
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          display="flex"
+          mt={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <FavoriteIcon sx={{ color: blue[700], mr: 1 }} />
+          <TextField
+            autoFocus={true}
+            variant="outlined"
+            size="small"
+            value={supportFeedback}
+            type="number"
+            id="supportFeedback"
+            label="Support"
+            onChange={(e) => setSupportFeedback(e.target.value)}
+            required
+          />
+          <Button variant="contained" type="submit" sx={{ ml: 3 }}>
+            {isUpdating ? "UPDATE" : "NEXT"}
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }

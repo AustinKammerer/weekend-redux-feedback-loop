@@ -1,44 +1,57 @@
 import React from "react";
 import axios from "axios";
+import { Route, HashRouter as Router, Redirect } from "react-router-dom";
 import "./App.css";
+// COMPONENTS
 import FeelingForm from "../FeelingForm/FeelingForm.jsx";
 import UnderstandingForm from "../UnderstandingForm/UnderstandingForm.jsx";
 import SupportForm from "../SupportForm/SupportForm.jsx";
 import CommentsForm from "../CommentsForm/CommentsForm.jsx";
 import ReviewFeedback from "../ReviewFeedback/ReviewFeedback.jsx";
 import Confirmation from "../Confirmation/Confirmation.jsx";
-import { Route, HashRouter as Router, Redirect } from "react-router-dom";
+import Header from "../Header/Header.jsx";
+// HOOKS
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+// MUI COMPONENTS
+import Box from "@mui/material/Box";
 
 function App() {
+  const dispatch = useDispatch();
+  // function to store the current page pathname - passed via props to components
+  const getPage = (path) =>
+    useEffect(() => {
+      dispatch({ type: "CHANGE_PAGE", payload: path });
+    }, []);
+
   return (
     <Router>
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Feedback!</h1>
-          <h4>Don't forget it!</h4>
-        </header>
-        <Route exact path="/">
-          <Redirect to={{ pathname: "/feeling" }} />
-        </Route>
-        <Route path="/feeling">
-          <FeelingForm />
-        </Route>
-        <Route path="/understanding">
-          <UnderstandingForm />
-        </Route>
-        <Route path="/support">
-          <SupportForm />
-        </Route>
-        <Route path="/comments">
-          <CommentsForm />
-        </Route>
-        <Route path="/review">
-          <ReviewFeedback />
-        </Route>
-        <Route path="/confirmation">
-          <Confirmation />
-        </Route>
-      </div>
+      <Box sx={{ width: "100%" }}>
+        <div className="App">
+          <Header />
+          <Route exact path="/">
+            <Redirect to={{ pathname: "/feeling" }} />
+          </Route>
+          <Route path="/feeling">
+            <FeelingForm getPage={getPage} />
+          </Route>
+          <Route path="/understanding">
+            <UnderstandingForm getPage={getPage} />
+          </Route>
+          <Route path="/support">
+            <SupportForm getPage={getPage} />
+          </Route>
+          <Route path="/comments">
+            <CommentsForm getPage={getPage} />
+          </Route>
+          <Route path="/review">
+            <ReviewFeedback getPage={getPage} />
+          </Route>
+          <Route path="/confirmation">
+            <Confirmation getPage={getPage} />
+          </Route>
+        </div>
+      </Box>
     </Router>
   );
 }

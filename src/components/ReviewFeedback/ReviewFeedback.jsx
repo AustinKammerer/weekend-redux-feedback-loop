@@ -1,14 +1,27 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
-export default function ReviewFeedback() {
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import LightbulbIcon from "@mui/icons-material/Lightbulb";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CommentIcon from "@mui/icons-material/Comment";
+import { blue } from "@mui/material/colors";
+
+export default function ReviewFeedback({ getPage }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
+  // send the current page's pathname to the store
+  getPage(location.pathname);
+
   // grab the feedback data from the store
   const feedback = useSelector((store) => store.feedbackReducer);
-
-  const dispatch = useDispatch();
-
-  const history = useHistory();
 
   // direct the user to the beginning if redux state is wiped (page refresh)
   if (
@@ -36,6 +49,10 @@ export default function ReviewFeedback() {
         .post("/api/feedback", feedback)
         .then((response) => {
           console.log("Successful POST");
+          // move the Stepper forward
+          //   handleComplete();
+          // update the stepReducer
+          dispatch({ type: "INCREMENT_STEP" });
           // direct user back to the confirmation view on successful POST
           history.push("/confirmation");
           // STRETCH TODO: call a GET for ADMIN
@@ -48,29 +65,59 @@ export default function ReviewFeedback() {
   };
 
   // CLICK CATEGORY TO RETURN AND CHANGE
-  const updateAnswer = (path) => {
+  const updateAnswer = (path, step) => {
     // sets updateModeReducer to true for conditional rendering/routing
     dispatch({ type: "UPDATE" });
+
+    // setActiveStep(step);
+
     // direct the user to the view corresponding to what they clicked
     history.push(`/${path}`);
   };
 
   return (
-    <>
-      <h2>Review Your Feedback</h2>
-      <h3 onClick={() => updateAnswer("feeling")}>
-        Feelings: {feedback.feeling}
-      </h3>
-      <h3 onClick={() => updateAnswer("understanding")}>
-        Understanding: {feedback.understanding}
-      </h3>
-      <h3 onClick={() => updateAnswer("support")}>
-        Support: {feedback.support}
-      </h3>
-      <h3 onClick={() => updateAnswer("comments")}>
-        Comments: {feedback.comments}
-      </h3>
-      <button onClick={() => submitFeedback(feedback)}>Submit</button>
-    </>
+    // <Route path="/review">
+    <Box width="550px" ml="auto" mr="auto">
+      <Paper elevation={3} sx={{ padding: "2rem" }}>
+        <Typography variant="h4">Review Your Feedback</Typography>
+        <Box display="flex" alignItems="center" mt={3}>
+          <InsertEmoticonIcon sx={{ color: blue[700], mr: 1 }} />
+          <Typography variant="h5" onClick={() => updateAnswer("feeling", 0)}>
+            Feelings: {feedback.feeling}
+          </Typography>
+        </Box>
+        <Box display="flex" alignItems="center" mt={3}>
+          <LightbulbIcon sx={{ color: blue[700], mr: 1 }} />
+          <Typography
+            variant="h5"
+            onClick={() => updateAnswer("understanding", 1)}
+          >
+            Understanding: {feedback.understanding}
+          </Typography>
+        </Box>
+        <Box display="flex" alignItems="center" mt={3}>
+          <FavoriteIcon sx={{ color: blue[700], mr: 1 }} />
+          <Typography variant="h5" onClick={() => updateAnswer("support", 2)}>
+            Support: {feedback.support}
+          </Typography>
+        </Box>
+        <Box display="flex" alignItems="center" mt={3}>
+          <CommentIcon sx={{ color: blue[700], mr: 1 }} />
+          <Typography variant="h5" onClick={() => updateAnswer("comments", 3)}>
+            Comments: {feedback.comments}
+          </Typography>
+        </Box>
+
+        <Box display="flex" justifyContent="end">
+          <Button
+            variant="contained"
+            sx={{ mt: 3 }}
+            onClick={() => submitFeedback(feedback)}
+          >
+            Submit
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
