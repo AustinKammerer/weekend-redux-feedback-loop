@@ -10,6 +10,7 @@ import CommentsForm from "../CommentsForm/CommentsForm.jsx";
 import ReviewFeedback from "../ReviewFeedback/ReviewFeedback.jsx";
 import Confirmation from "../Confirmation/Confirmation.jsx";
 import StepperComponent from "../StepperComponent/StepperComponent.jsx";
+import Header from "../Header/Header.jsx";
 // HOOKS
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -28,10 +29,7 @@ function App() {
     <Router>
       <Box sx={{ width: "100%" }}>
         <div className="App">
-          <header className="App-header">
-            <h1 className="App-title">Feedback!</h1>
-            <h4>Don't forget it!</h4>
-          </header>
+          <Header />
           <StepperComponent getStepperFuncs={getStepperFuncs} />
           <Route exact path="/">
             <Redirect to={{ pathname: "/feeling" }} />
