@@ -12,6 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -73,15 +74,15 @@ export default function AdminView({ getPage }) {
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell sx={{ width: 100 }}>Feeling</StyledTableCell>
-              <StyledTableCell sx={{ width: 100 }}>
+              <StyledTableCell sx={{ width: 175 }}>Feeling</StyledTableCell>
+              <StyledTableCell sx={{ width: 175 }}>
                 Understanding
               </StyledTableCell>
-              <StyledTableCell sx={{ width: 100 }}>Support</StyledTableCell>
+              <StyledTableCell sx={{ width: 175 }}>Support</StyledTableCell>
               <StyledTableCell>Comments</StyledTableCell>
               <StyledTableCell
                 size="small"
-                sx={{ width: 100 }}
+                sx={{ width: 80 }}
               ></StyledTableCell>
             </TableRow>
           </TableHead>

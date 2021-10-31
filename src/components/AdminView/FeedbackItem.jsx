@@ -1,8 +1,8 @@
+import DeleteFeedback from "./DeleteFeedback.jsx";
+
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import Button from "@mui/material/Button";
 
 // custom table cell and row functions taken from https://mui.com/components/tables/
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -36,10 +36,8 @@ export default function FeedbackItem({ feedback, deleteFeedback }) {
       <StyledTableCell>{feedback.understanding}</StyledTableCell>
       <StyledTableCell>{feedback.support}</StyledTableCell>
       <StyledTableCell>{feedback.comments}</StyledTableCell>
-      <StyledTableCell size="small">
-        <Button onClick={() => deleteFeedback(feedback.id)}>
-          <DeleteOutlineIcon />
-        </Button>
+      <StyledTableCell size="small" align="center">
+        <DeleteFeedback feedback={feedback} deleteFeedback={deleteFeedback} />
       </StyledTableCell>
     </StyledTableRow>
   );
