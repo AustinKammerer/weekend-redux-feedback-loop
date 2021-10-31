@@ -28,4 +28,37 @@ router.post("/", (req, res) => {
     });
 });
 
+// GET ROUTE
+router.get("/", (req, res) => {
+  console.log("/api/feedback GET");
+  const queryText = `SELECT * FROM "feedback" ORDER BY "id" DESC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log("Feedback successfully retrieved from database");
+      res.send(result.rows); // send the table back to the client
+    })
+    .catch((err) => {
+      console.log(`Error making query ${queryText}`, err);
+      res.sendStatus(500);
+    });
+});
+
+// DELETE ROUTE
+router.delete("/delete/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(`DELETE request at /api/feedback/delete/${id}`);
+  const queryText = `DELETE FROM "feedback" WHERE "id" = $1;`;
+  pool
+    .query(queryText, [id])
+    .then((result) => {
+      console.log("Feedback successfully deleted from database");
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log(`Error making query ${queryText}:`, err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;

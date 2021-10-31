@@ -10,6 +10,7 @@ import CommentsForm from "../CommentsForm/CommentsForm.jsx";
 import ReviewFeedback from "../ReviewFeedback/ReviewFeedback.jsx";
 import Confirmation from "../Confirmation/Confirmation.jsx";
 import Header from "../Header/Header.jsx";
+import AdminView from "../AdminView/AdminView.jsx";
 // HOOKS
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
@@ -49,6 +50,9 @@ function App() {
           </Route>
           <Route path="/confirmation">
             <Confirmation getPage={getPage} />
+          </Route>
+          <Route path="/admin">
+            <AdminView getPage={getPage} />
           </Route>
         </div>
       </Box>
