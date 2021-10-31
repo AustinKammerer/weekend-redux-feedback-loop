@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-export default function UnderstandingForm() {
+export default function UnderstandingForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store.
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -22,6 +22,11 @@ export default function UnderstandingForm() {
 
   const history = useHistory();
 
+  // keep current view and Stepper in sync in case of redux state reset
+  if (feedback.feeling === "") {
+    history.push("/");
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // validation (input required)
@@ -31,7 +36,10 @@ export default function UnderstandingForm() {
     } else if (understandingFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_UNDERSTANDING", payload: understandingFeedback });
+      // check if in update mode
       if (!isUpdating) {
+        // move the Stepper forward
+        funcsFromStepper.handleNext();
         // direct the user to the next form if answering for the first time
         history.push("/support");
       } else {

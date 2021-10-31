@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-export default function CommentsForm() {
+export default function CommentsForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store
   const feedback = useSelector((store) => store.feedbackReducer);
   // access the current comments value so the input field may be initialized with it
@@ -20,20 +20,33 @@ export default function CommentsForm() {
 
   const history = useHistory();
 
+  // keep current view and Stepper in sync in case of redux state reset
+  if (feedback.feeling === "") {
+    history.push("/");
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (commentsFeedback === "") {
-      // if no comments are entered, payload is set to " " so conditional rendering will work
-      dispatch({ type: "ADD_COMMENTS", payload: " " });
-    } else {
-      // dispatches an action and payload to the feedbackReducer
-      dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
-    }
+    // if (commentsFeedback === "") {
+    //   // if no comments are entered, payload is set to " " so conditional rendering will work
+    //   dispatch({ type: "ADD_COMMENTS", payload: " " });
+    // } else {
+    //   // dispatches an action and payload to the feedbackReducer
+    dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
+    // }
     if (isUpdating) {
       // end update mode
       dispatch({ type: "END_UPDATE" });
     }
+    // move the Stepper forward
+    funcsFromStepper.handleNext();
     // direct the user to review
+    history.push("/review");
+  };
+
+  const handleSkipClick = () => {
+    funcsFromStepper.handleSkip();
+    dispatch({ type: "ADD_COMMENTS", payload: " " });
     history.push("/review");
   };
 
@@ -49,6 +62,9 @@ export default function CommentsForm() {
           placeholder="comments"
           onChange={(e) => setCommentsFeedback(e.target.value)}
         />
+        <button type="button" onClick={handleSkipClick}>
+          SKIP
+        </button>
         <button type="submit">{isUpdating ? "UPDATE" : "NEXT"}</button>
       </form>
     </>

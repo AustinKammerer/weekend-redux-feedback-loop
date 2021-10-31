@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-export default function ReviewFeedback() {
+export default function ReviewFeedback({ funcsFromStepper }) {
   // grab the feedback data from the store
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -36,6 +36,8 @@ export default function ReviewFeedback() {
         .post("/api/feedback", feedback)
         .then((response) => {
           console.log("Successful POST");
+          // move the Stepper forward
+          funcsFromStepper.handleNext();
           // direct user back to the confirmation view on successful POST
           history.push("/confirmation");
           // STRETCH TODO: call a GET for ADMIN

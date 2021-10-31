@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-export default function SupportForm() {
+export default function SupportForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -21,6 +21,11 @@ export default function SupportForm() {
 
   const history = useHistory();
 
+  // keep current view and Stepper in sync in case of redux state reset
+  if (feedback.feeling === "") {
+    history.push("/");
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (supportFeedback === "") {
@@ -29,7 +34,10 @@ export default function SupportForm() {
     } else if (supportFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
+      // check if in update mode
       if (!isUpdating) {
+        // move the Stepper forward
+        funcsFromStepper.handleNext();
         // direct the user to the next form if answering for the first time
         history.push("/comments");
       } else {

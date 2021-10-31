@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-export default function FeelingForm() {
+export default function FeelingForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store.
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -30,7 +30,10 @@ export default function FeelingForm() {
     } else if (feelingFeedback !== "") {
       // dispatches an action and payload to the feedbackReducer
       dispatch({ type: "ADD_FEELING", payload: feelingFeedback });
+      // check if in update mode
       if (!isUpdating) {
+        // move the Stepper forward
+        funcsFromStepper.handleNext();
         // direct the user to the next form if answering for the first time
         history.push("/understanding");
       } else {
