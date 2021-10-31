@@ -33,7 +33,7 @@ export default function FeedbackItem({ feedback }) {
       <StyledTableCell>{feedback.understanding}</StyledTableCell>
       <StyledTableCell>{feedback.support}</StyledTableCell>
       <StyledTableCell>{feedback.comments}</StyledTableCell>
-      <StyledTableCell>
+      <StyledTableCell size="small">
         <Button>
           <DeleteOutlineIcon />
         </Button>

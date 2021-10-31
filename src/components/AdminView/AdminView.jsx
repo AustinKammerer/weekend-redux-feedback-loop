@@ -11,6 +11,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -54,23 +55,30 @@ export default function AdminView({ getPage }) {
   const allFeedback = useSelector((store) => store.adminReducer);
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }}>
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Feeling</StyledTableCell>
-            <StyledTableCell>Understanding</StyledTableCell>
-            <StyledTableCell>Support</StyledTableCell>
-            <StyledTableCell>Comments</StyledTableCell>
-            <StyledTableCell></StyledTableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {allFeedback.map((feedback, i) => (
-            <FeedbackItem key={i} feedback={feedback} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Box width={1000} mx="auto">
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }}>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell sx={{ width: 100 }}>Feeling</StyledTableCell>
+              <StyledTableCell sx={{ width: 100 }}>
+                Understanding
+              </StyledTableCell>
+              <StyledTableCell sx={{ width: 100 }}>Support</StyledTableCell>
+              <StyledTableCell>Comments</StyledTableCell>
+              <StyledTableCell
+                size="small"
+                sx={{ width: 100 }}
+              ></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {allFeedback.map((feedback, i) => (
+              <FeedbackItem key={i} feedback={feedback} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }
