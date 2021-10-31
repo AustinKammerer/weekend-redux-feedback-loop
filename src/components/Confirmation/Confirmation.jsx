@@ -1,6 +1,11 @@
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+
 export default function Confirmation({ funcsFromStepper }) {
   const dispatch = useDispatch();
 
@@ -14,10 +19,18 @@ export default function Confirmation({ funcsFromStepper }) {
     history.push("/");
   };
   return (
-    <div>
-      <h2>Thank You!</h2>
-      <h3>Your Feedback Has Been Received</h3>
-      <button onClick={handleClick}>Leave New Feedback</button>
-    </div>
+    <Box width="550px" ml="auto" mr="auto">
+      <Paper elevation={3} sx={{ padding: "2rem" }}>
+        <Typography variant="h4" fontStyle="normal">
+          Thank You!
+        </Typography>
+        <Typography variant="h5" mt={3}>
+          Your Feedback Has Been Received
+        </Typography>
+        <Button variant="contained" sx={{ mt: 3 }} onClick={handleClick}>
+          Leave New Feedback
+        </Button>
+      </Paper>
+    </Box>
   );
 }

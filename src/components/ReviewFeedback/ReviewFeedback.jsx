@@ -2,6 +2,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+
 export default function ReviewFeedback({ funcsFromStepper }) {
   // grab the feedback data from the store
   const feedback = useSelector((store) => store.feedbackReducer);
@@ -58,21 +63,41 @@ export default function ReviewFeedback({ funcsFromStepper }) {
   };
 
   return (
-    <>
-      <h2>Review Your Feedback</h2>
-      <h3 onClick={() => updateAnswer("feeling")}>
-        Feelings: {feedback.feeling}
-      </h3>
-      <h3 onClick={() => updateAnswer("understanding")}>
-        Understanding: {feedback.understanding}
-      </h3>
-      <h3 onClick={() => updateAnswer("support")}>
-        Support: {feedback.support}
-      </h3>
-      <h3 onClick={() => updateAnswer("comments")}>
-        Comments: {feedback.comments}
-      </h3>
-      <button onClick={() => submitFeedback(feedback)}>Submit</button>
-    </>
+    <Box width="550px" ml="auto" mr="auto">
+      <Paper elevation={3} sx={{ padding: "2rem" }}>
+        <Typography variant="h4" fontStyle="normal">
+          Review Your Feedback
+        </Typography>
+        <Typography variant="h5" mt={3} onClick={() => updateAnswer("feeling")}>
+          Feelings: {feedback.feeling}
+        </Typography>
+        <Typography
+          variant="h5"
+          mt={3}
+          onClick={() => updateAnswer("understanding")}
+        >
+          Understanding: {feedback.understanding}
+        </Typography>
+        <Typography variant="h5" mt={3} onClick={() => updateAnswer("support")}>
+          Support: {feedback.support}
+        </Typography>
+        <Typography
+          variant="h5"
+          mt={3}
+          onClick={() => updateAnswer("comments")}
+        >
+          Comments: {feedback.comments}
+        </Typography>
+        <Box display="flex" justifyContent="end">
+          <Button
+            variant="contained"
+            sx={{ mt: 3 }}
+            onClick={() => submitFeedback(feedback)}
+          >
+            Submit
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
