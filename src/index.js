@@ -77,6 +77,13 @@ const stepReducer = (state = 1, action) => {
 };
 
 // TODO: ADMIN REDUCER
+const adminReducer = (state = [], action) => {
+  switch (action.type) {
+    case "GET_FEEDBACK":
+      return action.payload;
+  }
+  return state;
+};
 
 // STORE CREATION
 const store = createStore(
@@ -85,6 +92,7 @@ const store = createStore(
     updateModeReducer,
     pathReducer,
     stepReducer,
+    adminReducer,
   }),
   applyMiddleware(logger)
 );
