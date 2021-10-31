@@ -53,6 +53,13 @@ const updateModeReducer = (state = false, action) => {
   }
 };
 
+const pathReducer = (state = "/feeling", action) => {
+  if (action.type === "CHANGE_PAGE") {
+    return action.payload;
+  }
+  return state;
+};
+
 // TODO: ADMIN REDUCER
 
 // STORE CREATION
@@ -60,6 +67,7 @@ const store = createStore(
   combineReducers({
     feedbackReducer,
     updateModeReducer,
+    pathReducer,
   }),
   applyMiddleware(logger)
 );

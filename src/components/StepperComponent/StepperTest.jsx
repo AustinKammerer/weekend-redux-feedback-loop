@@ -18,13 +18,13 @@ import Confirmation from "../Confirmation/Confirmation.jsx";
 
 const steps = ["Feeling", "Understanding", "Support", "Comments", "Review"];
 
-export default function HorizontalLinearStepper() {
+export default function StepperTest() {
   const [activeStep, setActiveStep] = useState(0);
   const [completed, setCompleted] = useState({});
 
   const dispatch = useDispatch();
 
-  // console.log(useParams());
+  const params = useParams();
 
   const totalSteps = () => {
     return steps.length;
@@ -72,11 +72,6 @@ export default function HorizontalLinearStepper() {
         return "/feeling";
     }
   }
-  const handleStep = (step) => () => {
-    dispatch({ type: "UPDATE" });
-    setActiveStep(step);
-    history.push(getStepRoute(step));
-  };
 
   const handleComplete = () => {
     const newCompleted = completed;
@@ -90,44 +85,47 @@ export default function HorizontalLinearStepper() {
     setCompleted({});
   };
 
-  const getStepContent = (step) => {
-    switch (step) {
-      case 0:
+  const getStepContent = (path) => {
+    // let {step} = useParams();
+    switch (path) {
+      case "/feeling":
         return (
           <FeelingForm
+            params={params}
             handleComplete={handleComplete}
             setActiveStep={setActiveStep}
           />
         );
-      case 1:
+      case "/understanding":
         return (
           <UnderstandingForm
             handleComplete={handleComplete}
             setActiveStep={setActiveStep}
           />
         );
-      case 2:
+      case "support":
         return (
           <SupportForm
             handleComplete={handleComplete}
             setActiveStep={setActiveStep}
           />
         );
-      case 3:
+      case "comments":
         return (
           <CommentsForm
             handleComplete={handleComplete}
-            handleNext={handleNext}
             setActiveStep={setActiveStep}
           />
         );
-      case 4:
+      case "/review":
         return (
           <ReviewFeedback
             handleComplete={handleComplete}
             setActiveStep={setActiveStep}
           />
         );
+      case "/confirmation":
+        return <Confirmation handleReset={handleReset} />;
       default:
         return "Unknown step";
     }
@@ -135,13 +133,15 @@ export default function HorizontalLinearStepper() {
 
   const feedback = useSelector((store) => store.feedbackReducer);
 
+  const path = useSelector((store) => store.pathReducer);
+
   const history = useHistory();
 
   // keep current view and Stepper in sync in case of redux state reset
-  if (feedback.feeling === "") {
-    history.push("/");
-  }
-
+  // if (feedback.feeling === "") {
+  //   history.push("/");
+  // }
+  console.log(params);
   return (
     <Box sx={{ width: "100%" }}>
       <Stepper nonLinear activeStep={activeStep}>
@@ -152,7 +152,7 @@ export default function HorizontalLinearStepper() {
         ))}
       </Stepper>
       <div>
-        {allStepsCompleted() ? (
+        {/* {allStepsCompleted() ? (
           <Route path="/confirmation">
             <Confirmation handleReset={handleReset} />
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
@@ -160,40 +160,9 @@ export default function HorizontalLinearStepper() {
               <Button onClick={handleReset}>Reset</Button>
             </Box>
           </Route>
-        ) : (
-          <Route path="/:step">
-            {getStepContent(activeStep)}
-            {/* <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Back
-              </Button>
-              <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext} sx={{ mr: 1 }}>
-                Next
-              </Button>
-              {activeStep !== steps.length &&
-                (completed[activeStep] ? (
-                  <Typography
-                    variant="caption"
-                    sx={{ display: "inline-block" }}
-                  >
-                    Step {activeStep + 1} already completed
-                  </Typography>
-                ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1
-                      ? "Finish"
-                      : "Complete Step"}
-                  </Button>
-                ))}
-            </Box> */}
-          </Route>
-        )}
+        ) : ( */}
+        <Route>{getStepContent(path)}</Route>
+        {/* )} */}
       </div>
     </Box>
   );

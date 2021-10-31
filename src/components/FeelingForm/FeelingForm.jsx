@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
@@ -12,9 +12,14 @@ import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import { blue } from "@mui/material/colors";
 
 export default function FeelingForm({ handleComplete, setActiveStep }) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  dispatch({ type: "CHANGE_PAGE", payload: "/feeling" });
+
   // grab the feedbackReducer from the store.
   const feedback = useSelector((store) => store.feedbackReducer);
-
+  const params = useParams();
   // determine if the user is updating via ReviewFeedback
   const isUpdating = useSelector((store) => store.updateModeReducer);
 
@@ -25,10 +30,6 @@ export default function FeelingForm({ handleComplete, setActiveStep }) {
   const [feelingFeedback, setFeelingFeedback] = useState(currentFeeling);
   // allows the user to see their currentFeeling when returning to this view.
   // when the reducer is reset, the input field will also be reset.
-
-  const dispatch = useDispatch();
-
-  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,6 +44,8 @@ export default function FeelingForm({ handleComplete, setActiveStep }) {
       if (!isUpdating) {
         // move the Stepper forward
         handleComplete();
+        dispatch({ type: "CHANGE_PAGE", payload: "/understanding" });
+
         // direct the user to the next form if answering for the first time
         history.push("/understanding");
       } else {
@@ -54,7 +57,7 @@ export default function FeelingForm({ handleComplete, setActiveStep }) {
       }
     }
   };
-
+  console.log(params);
   return (
     <Box width="550px" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
