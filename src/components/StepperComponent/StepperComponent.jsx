@@ -2,6 +2,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { useState, useEffect } from "react";
 
 const steps = ["Feeling", "Understanding", "Support", "Comments", "Review"];
@@ -11,6 +12,7 @@ export default function StepperComponent({ getStepperFuncs }) {
   const [skipped, setSkipped] = useState(new Set());
 
   const isStepOptional = (step) => {
+    console.log(step);
     return step === 3;
   };
 
@@ -34,6 +36,7 @@ export default function StepperComponent({ getStepperFuncs }) {
   };
   // visually skip over the Stepper step - 'Skip' in CommentsFrom uses this
   const handleSkip = () => {
+    console.log("inskip");
     if (!isStepOptional(activeStep)) {
       // skip validation
       throw new Error("You can't skip a step that isn't optional.");
@@ -57,28 +60,32 @@ export default function StepperComponent({ getStepperFuncs }) {
       handleNext: handleNext,
       handleSkip: handleSkip,
       handleReset: handleReset,
+      isStepOptional: isStepOptional,
+      isStepSkipped: isStepSkipped,
     });
   }, []);
-
+  console.log(isStepOptional());
   return (
-    <Stepper activeStep={activeStep}>
-      {steps.map((label, index) => {
-        const stepProps = {};
-        const labelProps = {};
-        if (isStepOptional(index)) {
-          labelProps.optional = (
-            <Typography variant="caption">Optional</Typography>
+    <Box mb={3}>
+      <Stepper activeStep={activeStep}>
+        {steps.map((label, index) => {
+          const stepProps = {};
+          const labelProps = {};
+          if (isStepOptional(index)) {
+            labelProps.optional = (
+              <Typography variant="caption">Optional</Typography>
+            );
+          }
+          if (isStepSkipped(index)) {
+            stepProps.completed = false;
+          }
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel {...labelProps}>{label}</StepLabel>
+            </Step>
           );
-        }
-        if (isStepSkipped(index)) {
-          stepProps.completed = false;
-        }
-        return (
-          <Step key={label} {...stepProps}>
-            <StepLabel {...labelProps}>{label}</StepLabel>
-          </Step>
-        );
-      })}
-    </Stepper>
+        })}
+      </Stepper>
+    </Box>
   );
 }

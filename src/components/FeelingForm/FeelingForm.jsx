@@ -2,6 +2,13 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+
 export default function FeelingForm({ funcsFromStepper }) {
   // grab the feedbackReducer from the store.
   const feedback = useSelector((store) => store.feedbackReducer);
@@ -46,19 +53,33 @@ export default function FeelingForm({ funcsFromStepper }) {
   };
 
   return (
-    <>
-      <h2>How are you feeling today?</h2>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={feelingFeedback}
-          type="text"
-          id="feelingFeedback"
-          name="feeling"
-          placeholder="feeling"
-          onChange={(e) => setFeelingFeedback(e.target.value)}
-        />
-        <button type="submit">{isUpdating ? "UPDATE" : "NEXT"}</button>
-      </form>
-    </>
+    <Box width="550px" ml="auto" mr="auto">
+      <Paper elevation={3} sx={{ padding: "2rem" }}>
+        <Typography variant="h5">How are you feeling today?</Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          display="flex"
+          mt={2}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <TextField
+            autoFocus={true}
+            variant="outlined"
+            size="small"
+            value={feelingFeedback}
+            type="number"
+            id="feelingFeedback"
+            label="Feeling"
+            onChange={(e) => setFeelingFeedback(e.target.value)}
+            required
+          />
+          <Button variant="contained" type="submit" sx={{ ml: 3 }}>
+            {isUpdating ? "UPDATE" : "NEXT"}
+          </Button>
+        </Box>
+      </Paper>
+    </Box>
   );
 }
