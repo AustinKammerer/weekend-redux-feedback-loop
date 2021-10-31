@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import { blue } from "@mui/material/colors";
 
-export default function FeelingForm({ funcsFromStepper }) {
+export default function FeelingForm({ handleComplete, setActiveStep }) {
   // grab the feedbackReducer from the store.
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -42,13 +42,14 @@ export default function FeelingForm({ funcsFromStepper }) {
       // check if in update mode
       if (!isUpdating) {
         // move the Stepper forward
-        funcsFromStepper.handleNext();
+        handleComplete();
         // direct the user to the next form if answering for the first time
         history.push("/understanding");
       } else {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
+        setActiveStep(4);
         history.push("/review");
       }
     }

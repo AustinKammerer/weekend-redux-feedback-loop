@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,7 +10,7 @@ import Paper from "@mui/material/Paper";
 import CommentIcon from "@mui/icons-material/Comment";
 import { blue } from "@mui/material/colors";
 
-export default function CommentsForm({ funcsFromStepper }) {
+export default function CommentsForm({ handleComplete, setActiveStep }) {
   // grab the feedbackReducer from the store
   const feedback = useSelector((store) => store.feedbackReducer);
   // access the current comments value so the input field may be initialized with it
@@ -45,18 +44,13 @@ export default function CommentsForm({ funcsFromStepper }) {
     // }
     if (!isUpdating) {
       // move the Stepper forward
-      funcsFromStepper.handleNext();
+      handleComplete();
     } else {
       // end update mode
       dispatch({ type: "END_UPDATE" });
+      setActiveStep(4);
     }
     // direct the user to review
-    history.push("/review");
-  };
-
-  const handleSkipClick = () => {
-    funcsFromStepper.handleSkip();
-    dispatch({ type: "ADD_COMMENTS", payload: " " });
     history.push("/review");
   };
 
@@ -83,18 +77,7 @@ export default function CommentsForm({ funcsFromStepper }) {
             id="commentsFeedback"
             label="comments"
             onChange={(e) => setCommentsFeedback(e.target.value)}
-            required
           />
-          {!isUpdating && (
-            <Button
-              variant="contained"
-              type="button"
-              onClick={handleSkipClick}
-              sx={{ ml: 3 }}
-            >
-              SKIP
-            </Button>
-          )}
           <Button variant="contained" type="submit" sx={{ ml: 3 }}>
             {isUpdating ? "UPDATE" : "NEXT"}
           </Button>

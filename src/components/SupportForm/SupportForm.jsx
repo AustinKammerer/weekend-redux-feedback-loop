@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { blue } from "@mui/material/colors";
 
-export default function SupportForm({ funcsFromStepper }) {
+export default function SupportForm({ handleComplete, setActiveStep }) {
   // grab the feedbackReducer from the store
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -46,13 +46,14 @@ export default function SupportForm({ funcsFromStepper }) {
       // check if in update mode
       if (!isUpdating) {
         // move the Stepper forward
-        funcsFromStepper.handleNext();
+        handleComplete();
         // direct the user to the next form if answering for the first time
         history.push("/comments");
       } else {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
+        setActiveStep(4);
         history.push("/review");
       }
     }

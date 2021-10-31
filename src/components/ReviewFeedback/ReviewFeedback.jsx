@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Route } from "react-router-dom";
 import axios from "axios";
 
 import Typography from "@mui/material/Typography";
@@ -12,7 +12,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import { blue } from "@mui/material/colors";
 
-export default function ReviewFeedback({ funcsFromStepper }) {
+export default function ReviewFeedback({ handleComplete, setActiveStep }) {
   // grab the feedback data from the store
   const feedback = useSelector((store) => store.feedbackReducer);
 
@@ -47,7 +47,7 @@ export default function ReviewFeedback({ funcsFromStepper }) {
         .then((response) => {
           console.log("Successful POST");
           // move the Stepper forward
-          funcsFromStepper.handleNext();
+          handleComplete();
           // direct user back to the confirmation view on successful POST
           history.push("/confirmation");
           // STRETCH TODO: call a GET for ADMIN
@@ -60,20 +60,24 @@ export default function ReviewFeedback({ funcsFromStepper }) {
   };
 
   // CLICK CATEGORY TO RETURN AND CHANGE
-  const updateAnswer = (path) => {
+  const updateAnswer = (path, step) => {
     // sets updateModeReducer to true for conditional rendering/routing
     dispatch({ type: "UPDATE" });
+
+    setActiveStep(step);
+
     // direct the user to the view corresponding to what they clicked
     history.push(`/${path}`);
   };
 
   return (
+    // <Route path="/review">
     <Box width="550px" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
         <Typography variant="h4">Review Your Feedback</Typography>
         <Box display="flex" alignItems="center" mt={3}>
           <InsertEmoticonIcon sx={{ color: blue[700], mr: 1 }} />
-          <Typography variant="h5" onClick={() => updateAnswer("feeling")}>
+          <Typography variant="h5" onClick={() => updateAnswer("feeling", 0)}>
             Feelings: {feedback.feeling}
           </Typography>
         </Box>
@@ -81,20 +85,20 @@ export default function ReviewFeedback({ funcsFromStepper }) {
           <LightbulbIcon sx={{ color: blue[700], mr: 1 }} />
           <Typography
             variant="h5"
-            onClick={() => updateAnswer("understanding")}
+            onClick={() => updateAnswer("understanding", 1)}
           >
             Understanding: {feedback.understanding}
           </Typography>
         </Box>
         <Box display="flex" alignItems="center" mt={3}>
           <FavoriteIcon sx={{ color: blue[700], mr: 1 }} />
-          <Typography variant="h5" onClick={() => updateAnswer("support")}>
+          <Typography variant="h5" onClick={() => updateAnswer("support", 2)}>
             Support: {feedback.support}
           </Typography>
         </Box>
         <Box display="flex" alignItems="center" mt={3}>
           <CommentIcon sx={{ color: blue[700], mr: 1 }} />
-          <Typography variant="h5" onClick={() => updateAnswer("comments")}>
+          <Typography variant="h5" onClick={() => updateAnswer("comments", 3)}>
             Comments: {feedback.comments}
           </Typography>
         </Box>
