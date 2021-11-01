@@ -37,6 +37,15 @@ export default function SupportForm({ getPage }) {
     history.push("/");
   }
 
+  // set a min and max for the input
+  const validateNumber = (event) => {
+    const value = event.target.value;
+    //if the input value is less than 1 or greater than 6, then don't change the input value (empty string allowed for backspacing)
+    const setValue =
+      (value >= 1 && value <= 6) || value === "" ? value : supportFeedback;
+    setSupportFeedback(setValue);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (supportFeedback === "") {
@@ -66,6 +75,9 @@ export default function SupportForm({ getPage }) {
         <Typography variant="h5">
           How well are you being supported today?
         </Typography>
+        <Typography variant="subtitle2" fontStyle="italic">
+          Enter a Value 1 - 6
+        </Typography>
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -83,7 +95,7 @@ export default function SupportForm({ getPage }) {
             type="number"
             id="supportFeedback"
             label="Support"
-            onChange={(e) => setSupportFeedback(e.target.value)}
+            onChange={validateNumber}
             required
           />
           <Button variant="contained" type="submit" sx={{ ml: 3 }}>

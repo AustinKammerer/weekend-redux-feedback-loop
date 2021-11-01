@@ -75,6 +75,9 @@ export default function ReviewFeedback({ getPage }) {
     <Box maxWidth="sm" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
         <Typography variant="h4">Review Your Feedback</Typography>
+        <Typography variant="subtitle2" fontStyle="italic">
+          Click to Update Answer
+        </Typography>
         <Box display="flex" alignItems="center" mt={3}>
           <InsertEmoticonIcon
             sx={{

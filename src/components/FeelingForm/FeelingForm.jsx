@@ -32,6 +32,15 @@ export default function FeelingForm({ getPage }) {
   // allows the user to see their currentFeeling when returning to this view.
   // when the reducer is reset, the input field will also be reset.
 
+  // set a min and max for the input
+  const validateNumber = (event) => {
+    const value = event.target.value;
+    //if the input value is less than 1 or greater than 6, then don't change the input value (empty string allowed for backspacing)
+    const setValue =
+      (value >= 1 && value <= 6) || value === "" ? value : feelingFeedback;
+    setFeelingFeedback(setValue);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // validation (input required)
@@ -59,6 +68,9 @@ export default function FeelingForm({ getPage }) {
     <Box maxWidth="sm" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
         <Typography variant="h5">How are you feeling today?</Typography>
+        <Typography variant="subtitle2" fontStyle="italic">
+          Enter a Value 1 - 6
+        </Typography>
         <Box
           component="form"
           onSubmit={handleSubmit}
@@ -76,7 +88,7 @@ export default function FeelingForm({ getPage }) {
             type="number"
             id="feelingFeedback"
             label="Feeling"
-            onChange={(e) => setFeelingFeedback(e.target.value)}
+            onChange={validateNumber}
             required
           />
           <Button variant="contained" type="submit" sx={{ ml: 3 }}>
