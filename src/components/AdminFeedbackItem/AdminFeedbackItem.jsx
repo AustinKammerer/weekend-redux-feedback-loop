@@ -8,12 +8,8 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { red } from "@mui/material/colors";
 
-// custom table cell and row functions taken from https://mui.com/components/tables/
+// custom table cell and row functions taken from https://mui.com/components/tables/ and tweaked
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
   },
@@ -27,6 +23,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:last-child td, &:last-child th": {
     border: 0,
   },
+  // style the td's if the row is 'flagged' (feedback.flagged)
+  "&.flagged td": {
+    fontWeight: "bold",
+    color: red[700],
+    fontStyle: "italic",
+  },
 }));
 
 export default function AdminFeedbackItem({
@@ -38,28 +40,15 @@ export default function AdminFeedbackItem({
 
   // table cells are red and bold if the feedback entry is flagged
   return (
-    <StyledTableRow key={feedback.id}>
-      <StyledTableCell
-        sx={feedback.flagged ? { color: red[700], fontWeight: "bold" } : null}
-      >
-        {feedback.feeling}
-      </StyledTableCell>
-      <StyledTableCell
-        sx={feedback.flagged ? { color: red[700], fontWeight: "bold" } : null}
-      >
-        {feedback.understanding}
-      </StyledTableCell>
-      <StyledTableCell
-        sx={feedback.flagged ? { color: red[700], fontWeight: "bold" } : null}
-      >
-        {feedback.support}
-      </StyledTableCell>
-      <StyledTableCell
-        sx={feedback.flagged ? { color: red[700], fontWeight: "bold" } : null}
-      >
-        {feedback.comments}
-      </StyledTableCell>
-      <StyledTableCell size="small" align="center">
+    <StyledTableRow
+      className={feedback.flagged ? "flagged" : null}
+      key={feedback.id}
+    >
+      <StyledTableCell>{feedback.feeling}</StyledTableCell>
+      <StyledTableCell>{feedback.understanding}</StyledTableCell>
+      <StyledTableCell>{feedback.support}</StyledTableCell>
+      <StyledTableCell>{feedback.comments}</StyledTableCell>
+      <StyledTableCell size="small">
         <Stack direction="row" justifyContent="flex-end">
           <Button onClick={() => flagFeedback(feedback.id)}>
             <ReviewsIcon

@@ -16,14 +16,14 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-// custom table cell function taken from https://mui.com/components/tables/
+// custom table cell function taken from https://mui.com/components/tables/ and tweaked
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
   },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
+  [`&.${tableCellClasses.head}:last-of-type`]: {
+    width: 130,
   },
 }));
 
@@ -93,7 +93,10 @@ export default function AdminView({ getPage }) {
               <StyledTableCell>Understanding</StyledTableCell>
               <StyledTableCell>Support</StyledTableCell>
               <StyledTableCell>Comments</StyledTableCell>
-              <StyledTableCell size="small"></StyledTableCell>
+              <StyledTableCell
+                size="small"
+                // sx={{ width: 130 }}
+              ></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
