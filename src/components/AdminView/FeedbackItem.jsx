@@ -1,8 +1,13 @@
 import DeleteFeedback from "./DeleteFeedback.jsx";
+import "./FeedbackItem.css";
 
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import ReviewsIcon from "@mui/icons-material/Reviews";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import { red } from "@mui/material/colors";
 
 // custom table cell and row functions taken from https://mui.com/components/tables/
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -25,19 +30,49 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function FeedbackItem({ feedback, deleteFeedback }) {
+export default function FeedbackItem({
+  feedback,
+  deleteFeedback,
+  flagFeedback,
+}) {
   // this component has access to the database information for the feedback item
 
+  // table cells are red and bold if the feedback entry is flagged
   return (
     <StyledTableRow key={feedback.id}>
-      <StyledTableCell component="th" scope="row">
+      <StyledTableCell
+        sx={feedback.flagged ? { color: red[700], fontWeight: "bold" } : null}
+      >
         {feedback.feeling}
       </StyledTableCell>
-      <StyledTableCell>{feedback.understanding}</StyledTableCell>
-      <StyledTableCell>{feedback.support}</StyledTableCell>
-      <StyledTableCell>{feedback.comments}</StyledTableCell>
+      <StyledTableCell
+        sx={feedback.flagged ? { color: red[700], fontWeight: "bold" } : null}
+      >
+        {feedback.understanding}
+      </StyledTableCell>
+      <StyledTableCell
+        sx={feedback.flagged ? { color: red[700], fontWeight: "bold" } : null}
+      >
+        {feedback.support}
+      </StyledTableCell>
+      <StyledTableCell
+        sx={feedback.flagged ? { color: red[700], fontWeight: "bold" } : null}
+      >
+        {feedback.comments}
+      </StyledTableCell>
       <StyledTableCell size="small" align="center">
-        <DeleteFeedback feedback={feedback} deleteFeedback={deleteFeedback} />
+        <Stack direction="row" justifyContent="flex-end">
+          <Button onClick={() => flagFeedback(feedback.id)}>
+            <ReviewsIcon
+              sx={
+                feedback.flagged
+                  ? { color: red[700] }
+                  : { color: "action.active" }
+              }
+            />
+          </Button>
+          <DeleteFeedback feedback={feedback} deleteFeedback={deleteFeedback} />
+        </Stack>
       </StyledTableCell>
     </StyledTableRow>
   );

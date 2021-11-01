@@ -14,6 +14,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
+// custom table cell function taken from https://mui.com/components/tables/
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: theme.palette.common.black,
@@ -24,23 +25,18 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   },
 }));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
-  },
-  // hide last border
-  "&:last-child td, &:last-child th": {
-    border: 0,
-  },
-}));
-
 export default function AdminView({ getPage }) {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  // send the current page's pathname to the store
+  getPage(location.pathname);
 
   useEffect(() => {
     getFeedback();
   }, []);
 
+  // GET request
   const getFeedback = () => {
     axios
       .get("/api/feedback")
@@ -53,6 +49,7 @@ export default function AdminView({ getPage }) {
       });
   };
 
+  // DELETE request
   const deleteFeedback = (id) => {
     axios
       .delete(`/api/feedback/delete/${id}`)
@@ -66,6 +63,20 @@ export default function AdminView({ getPage }) {
       });
   };
 
+  // PUT request to toggle 'flagged' status
+  const flagFeedback = (id) => {
+    axios
+      .put(`/api/feedback/flag/${id}`)
+      .then((res) => {
+        console.log("Feedback update successful");
+        getFeedback();
+      })
+      .catch((err) => {
+        console.log("Error updateing feedback", err);
+        alert("Unable to update feedback!");
+      });
+  };
+
   const allFeedback = useSelector((store) => store.adminReducer);
 
   return (
@@ -74,15 +85,15 @@ export default function AdminView({ getPage }) {
         <Table sx={{ minWidth: 700 }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell sx={{ width: 175 }}>Feeling</StyledTableCell>
-              <StyledTableCell sx={{ width: 175 }}>
+              <StyledTableCell sx={{ width: 130 }}>Feeling</StyledTableCell>
+              <StyledTableCell sx={{ width: 130 }}>
                 Understanding
               </StyledTableCell>
-              <StyledTableCell sx={{ width: 175 }}>Support</StyledTableCell>
+              <StyledTableCell sx={{ width: 130 }}>Support</StyledTableCell>
               <StyledTableCell>Comments</StyledTableCell>
               <StyledTableCell
                 size="small"
-                sx={{ width: 80 }}
+                sx={{ width: 130 }}
               ></StyledTableCell>
             </TableRow>
           </TableHead>
@@ -92,6 +103,7 @@ export default function AdminView({ getPage }) {
                 key={i}
                 feedback={feedback}
                 deleteFeedback={deleteFeedback}
+                flagFeedback={flagFeedback}
               />
             ))}
           </TableBody>

@@ -61,4 +61,21 @@ router.delete("/delete/:id", (req, res) => {
     });
 });
 
+// PUT ROUTE
+router.put("/flag/:id", (req, res) => {
+  const id = req.params.id;
+  console.log(`PUT request at /api/feedback/flag/${id}`);
+  const queryText = `UPDATE "feedback" SET "flagged" = NOT "flagged" WHERE "id" = $1;`;
+  pool
+    .query(queryText, [id])
+    .then((result) => {
+      console.log("Feedback successfully updated");
+      res.sendStatus(201);
+    })
+    .catch((err) => {
+      console.log(`Error making query ${queryText}:`, err);
+      res.sendStatus(500);
+    });
+});
+
 module.exports = router;
