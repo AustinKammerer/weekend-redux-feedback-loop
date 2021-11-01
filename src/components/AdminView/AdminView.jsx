@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
 import FeedbackItem from "./FeedbackItem.jsx";
 
@@ -13,7 +13,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 // custom table cell function taken from https://mui.com/components/tables/
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -29,6 +29,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 export default function AdminView({ getPage }) {
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
 
   // send the current page's pathname to the store
   getPage(location.pathname);
@@ -110,6 +111,13 @@ export default function AdminView({ getPage }) {
           </TableBody>
         </Table>
       </TableContainer>
+      <Button
+        variant="contained"
+        sx={{ mt: 3 }}
+        onClick={() => history.push("/")}
+      >
+        Log Out
+      </Button>
     </Box>
   );
 }
