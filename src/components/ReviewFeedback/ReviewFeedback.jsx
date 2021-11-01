@@ -84,7 +84,7 @@ export default function ReviewFeedback({ getPage }) {
           />
           <Typography
             variant="h5"
-            onClick={() => updateAnswer("feeling", 0)}
+            onClick={() => updateAnswer("feeling")}
             sx={{
               "&:hover": {
                 cursor: "pointer",
@@ -98,7 +98,7 @@ export default function ReviewFeedback({ getPage }) {
           <LightbulbIcon sx={{ color: blue[700], mr: 1 }} />
           <Typography
             variant="h5"
-            onClick={() => updateAnswer("understanding", 1)}
+            onClick={() => updateAnswer("understanding")}
             sx={{
               "&:hover": {
                 cursor: "pointer",
@@ -112,7 +112,7 @@ export default function ReviewFeedback({ getPage }) {
           <FavoriteIcon sx={{ color: blue[700], mr: 1 }} />
           <Typography
             variant="h5"
-            onClick={() => updateAnswer("support", 2)}
+            onClick={() => updateAnswer("support")}
             sx={{
               "&:hover": {
                 cursor: "pointer",
@@ -126,7 +126,7 @@ export default function ReviewFeedback({ getPage }) {
           <CommentIcon sx={{ color: blue[700], mr: 1 }} />
           <Typography
             variant="h5"
-            onClick={() => updateAnswer("comments", 3)}
+            onClick={() => updateAnswer("comments")}
             sx={{
               "&:hover": {
                 cursor: "pointer",
