@@ -63,7 +63,7 @@ export default function UnderstandingForm({ getPage }) {
   };
 
   return (
-    <Box width="550px" ml="auto" mr="auto">
+    <Box maxWidth="sm" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
         <Typography variant="h5">
           How well are you understanding the content?

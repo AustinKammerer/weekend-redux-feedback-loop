@@ -56,7 +56,7 @@ export default function FeelingForm({ getPage }) {
     }
   };
   return (
-    <Box width="550px" ml="auto" mr="auto">
+    <Box maxWidth="sm" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
         <Typography variant="h5">How are you feeling today?</Typography>
         <Box

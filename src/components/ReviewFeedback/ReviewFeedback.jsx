@@ -72,7 +72,7 @@ export default function ReviewFeedback({ getPage }) {
 
   return (
     // <Route path="/review">
-    <Box width="550px" ml="auto" mr="auto">
+    <Box maxWidth="sm" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
         <Typography variant="h4">Review Your Feedback</Typography>
         <Box display="flex" alignItems="center" mt={3}>

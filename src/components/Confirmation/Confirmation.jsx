@@ -24,7 +24,7 @@ export default function Confirmation({ getPage }) {
     history.push("/");
   };
   return (
-    <Box width="550px" ml="auto" mr="auto">
+    <Box maxWidth="sm" ml="auto" mr="auto">
       <Paper elevation={3} sx={{ padding: "2rem" }}>
         <Typography variant="h4">Thank You!</Typography>
         <Typography variant="h5" mt={3}>
