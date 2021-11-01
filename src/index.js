@@ -53,6 +53,7 @@ const updateModeReducer = (state = false, action) => {
   }
 };
 
+// PATH REDUCER - keep track of the current pathname (no real use right now)
 const pathReducer = (state = "/feeling", action) => {
   if (action.type === "CHANGE_PAGE") {
     return action.payload;
@@ -60,23 +61,20 @@ const pathReducer = (state = "/feeling", action) => {
   return state;
 };
 
+// STEP REDUCER - keep track of the current step in the form process (no real use right now)
 const stepReducer = (state = 1, action) => {
   switch (action.type) {
     case "INCREMENT_STEP":
       return state + 1;
     case "DECREMENT_STEP":
       return state - 1;
-    // case "UPDATE":
-    //   return action.payload;
-    // case "END_UPDATE":
-    //   return 5;
     case "CLEAR_FEEDBACK":
       return 1;
   }
   return state;
 };
 
-// TODO: ADMIN REDUCER
+// ADMIN REDUCER - for storing database data in the store
 const adminReducer = (state = [], action) => {
   switch (action.type) {
     case "GET_FEEDBACK":

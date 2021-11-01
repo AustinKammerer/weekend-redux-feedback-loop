@@ -49,13 +49,11 @@ export default function ReviewFeedback({ getPage }) {
         .post("/api/feedback", feedback)
         .then((response) => {
           console.log("Successful POST");
-          // move the Stepper forward
-          //   handleComplete();
           // update the stepReducer
           dispatch({ type: "INCREMENT_STEP" });
           // direct user back to the confirmation view on successful POST
           history.push("/confirmation");
-          // STRETCH TODO: call a GET for ADMIN
+          // GET request is called in AdminView
         })
         .catch((err) => {
           console.log("Error in POST", err);
@@ -65,12 +63,9 @@ export default function ReviewFeedback({ getPage }) {
   };
 
   // CLICK CATEGORY TO RETURN AND CHANGE
-  const updateAnswer = (path, step) => {
+  const updateAnswer = (path) => {
     // sets updateModeReducer to true for conditional rendering/routing
     dispatch({ type: "UPDATE" });
-
-    // setActiveStep(step);
-
     // direct the user to the view corresponding to what they clicked
     history.push(`/${path}`);
   };
@@ -81,8 +76,21 @@ export default function ReviewFeedback({ getPage }) {
       <Paper elevation={3} sx={{ padding: "2rem" }}>
         <Typography variant="h4">Review Your Feedback</Typography>
         <Box display="flex" alignItems="center" mt={3}>
-          <InsertEmoticonIcon sx={{ color: blue[700], mr: 1 }} />
-          <Typography variant="h5" onClick={() => updateAnswer("feeling", 0)}>
+          <InsertEmoticonIcon
+            sx={{
+              color: blue[700],
+              mr: 1,
+            }}
+          />
+          <Typography
+            variant="h5"
+            onClick={() => updateAnswer("feeling", 0)}
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+          >
             Feelings: {feedback.feeling}
           </Typography>
         </Box>
@@ -91,19 +99,40 @@ export default function ReviewFeedback({ getPage }) {
           <Typography
             variant="h5"
             onClick={() => updateAnswer("understanding", 1)}
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
           >
             Understanding: {feedback.understanding}
           </Typography>
         </Box>
         <Box display="flex" alignItems="center" mt={3}>
           <FavoriteIcon sx={{ color: blue[700], mr: 1 }} />
-          <Typography variant="h5" onClick={() => updateAnswer("support", 2)}>
+          <Typography
+            variant="h5"
+            onClick={() => updateAnswer("support", 2)}
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+          >
             Support: {feedback.support}
           </Typography>
         </Box>
         <Box display="flex" alignItems="center" mt={3}>
           <CommentIcon sx={{ color: blue[700], mr: 1 }} />
-          <Typography variant="h5" onClick={() => updateAnswer("comments", 3)}>
+          <Typography
+            variant="h5"
+            onClick={() => updateAnswer("comments", 3)}
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+              },
+            }}
+          >
             Comments: {feedback.comments}
           </Typography>
         </Box>

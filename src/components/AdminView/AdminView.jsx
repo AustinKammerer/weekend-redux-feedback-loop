@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
 import axios from "axios";
-import FeedbackItem from "./FeedbackItem.jsx";
+
+import AdminFeedbackItem from "../AdminFeedbackItem/AdminFeedbackItem.jsx";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -34,6 +35,7 @@ export default function AdminView({ getPage }) {
   // send the current page's pathname to the store
   getPage(location.pathname);
 
+  // send the GET request once on page load
   useEffect(() => {
     getFeedback();
   }, []);
@@ -101,7 +103,7 @@ export default function AdminView({ getPage }) {
           </TableHead>
           <TableBody>
             {allFeedback.map((feedback, i) => (
-              <FeedbackItem
+              <AdminFeedbackItem
                 key={i}
                 feedback={feedback}
                 deleteFeedback={deleteFeedback}
