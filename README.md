@@ -16,7 +16,6 @@ The biggest challenge in this project has been trying to implement a stepper for
 
 TODO:
 
-- [ ] Ability to flag feedback entries
 - [ ] Implement a stepper
 - [ ] Deploy to Heroku
 
