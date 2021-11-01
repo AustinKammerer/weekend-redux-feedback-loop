@@ -43,9 +43,6 @@ export default function FeelingForm({ getPage }) {
       dispatch({ type: "ADD_FEELING", payload: feelingFeedback });
       // check if in update mode
       if (!isUpdating) {
-        // move the Stepper forward
-        // handleComplete();
-        dispatch({ type: "CHANGE_PAGE", payload: "/understanding" });
         // update the step reducer
         dispatch({ type: "INCREMENT_STEP" });
         // direct the user to the next form if answering for the first time
@@ -54,7 +51,6 @@ export default function FeelingForm({ getPage }) {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
-        // setActiveStep(4);
         history.push("/review");
       }
     }

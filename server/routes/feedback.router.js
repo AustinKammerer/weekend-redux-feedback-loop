@@ -16,16 +16,23 @@ router.post("/", (req, res) => {
     Number(feedbackToSend.support),
     feedbackToSend.comments,
   ];
-  pool
-    .query(queryText, values)
-    .then((result) => {
-      console.log("Feedback successfully sent to database");
-      res.sendStatus(201);
-    })
-    .catch((err) => {
-      console.log("Error sending feedback to database:", err);
-      res.sendStatus(500);
-    });
+  // value validation - make sure feeling, understanding, and support are valid numbers
+  // first filter out the numbers, the see if any of them are NaN
+  values.length === 0 ||
+  values
+    .filter((value) => typeof value === "number")
+    .filter((num) => isNaN(num)).length > 0
+    ? res.sendStatus(400)
+    : pool
+        .query(queryText, values)
+        .then((result) => {
+          console.log("Feedback successfully sent to database");
+          res.sendStatus(201);
+        })
+        .catch((err) => {
+          console.log("Error sending feedback to database:", err);
+          res.sendStatus(500);
+        });
 });
 
 // GET ROUTE
