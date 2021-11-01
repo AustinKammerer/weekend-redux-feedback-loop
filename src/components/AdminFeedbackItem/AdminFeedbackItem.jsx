@@ -1,5 +1,4 @@
-import DeleteFeedback from "./DeleteFeedback.jsx";
-import "./FeedbackItem.css";
+import AdminDeleteFeedback from "../AdminDeleteFeedback/AdminDeleteFeedback.jsx";
 
 import { styled } from "@mui/material/styles";
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
@@ -30,7 +29,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-export default function FeedbackItem({
+export default function AdminFeedbackItem({
   feedback,
   deleteFeedback,
   flagFeedback,
@@ -71,7 +70,10 @@ export default function FeedbackItem({
               }
             />
           </Button>
-          <DeleteFeedback feedback={feedback} deleteFeedback={deleteFeedback} />
+          <AdminDeleteFeedback
+            feedback={feedback}
+            deleteFeedback={deleteFeedback}
+          />
         </Stack>
       </StyledTableCell>
     </StyledTableRow>

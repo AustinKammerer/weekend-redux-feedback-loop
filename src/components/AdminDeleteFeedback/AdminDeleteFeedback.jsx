@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,7 +9,7 @@ import Button from "@mui/material/Button";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { red } from "@mui/material/colors";
 
-export default function DeleteFeedback({ feedback, deleteFeedback }) {
+export default function AdminDeleteFeedback({ feedback, deleteFeedback }) {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
