@@ -49,8 +49,6 @@ export default function UnderstandingForm({ getPage }) {
       dispatch({ type: "ADD_UNDERSTANDING", payload: understandingFeedback });
       // check if in update mode
       if (!isUpdating) {
-        // move the Stepper forward
-        // handleComplete();
         // update the stepReducer
         dispatch({ type: "INCREMENT_STEP" });
         // direct the user to the next form if answering for the first time
@@ -59,7 +57,6 @@ export default function UnderstandingForm({ getPage }) {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
-        // setActiveStep(4);
         history.push("/review");
       }
     }

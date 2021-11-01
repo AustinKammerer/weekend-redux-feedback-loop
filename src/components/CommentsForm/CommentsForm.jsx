@@ -39,22 +39,14 @@ export default function CommentsForm({ getPage }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (commentsFeedback === "") {
-    //   // if no comments are entered, payload is set to " " so conditional rendering will work
-    //   dispatch({ type: "ADD_COMMENTS", payload: " " });
-    // } else {
-    //   // dispatches an action and payload to the feedbackReducer
+    // dispatches an action and payload to the feedbackReducer
     dispatch({ type: "ADD_COMMENTS", payload: commentsFeedback });
-    // }
     if (!isUpdating) {
-      // move the Stepper forward
-      //   handleComplete();
       // update the stepReducer
       dispatch({ type: "INCREMENT_STEP" });
     } else {
       // end update mode
       dispatch({ type: "END_UPDATE" });
-      //   setActiveStep(4);
     }
     // direct the user to review
     history.push("/review");

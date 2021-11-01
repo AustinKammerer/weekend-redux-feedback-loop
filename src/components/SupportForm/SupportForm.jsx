@@ -48,8 +48,6 @@ export default function SupportForm({ getPage }) {
       dispatch({ type: "ADD_SUPPORT", payload: supportFeedback });
       // check if in update mode
       if (!isUpdating) {
-        // move the Stepper forward
-        // handleComplete();
         // update the step reducer
         dispatch({ type: "INCREMENT_STEP" });
         // direct the user to the next form if answering for the first time
@@ -58,7 +56,6 @@ export default function SupportForm({ getPage }) {
         // end update mode
         dispatch({ type: "END_UPDATE" });
         // direct the user back to ReviewFeedback if updating answer
-        // setActiveStep(4);
         history.push("/review");
       }
     }
