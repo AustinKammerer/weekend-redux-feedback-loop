@@ -84,21 +84,16 @@ export default function AdminView({ getPage }) {
   const allFeedback = useSelector((store) => store.adminReducer);
 
   return (
-    <Box width={1000} mx="auto">
+    <Box maxWidth="lg" mx="auto">
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 700 }}>
+        <Table sx={{ overflow: "scroll" }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell sx={{ width: 130 }}>Feeling</StyledTableCell>
-              <StyledTableCell sx={{ width: 130 }}>
-                Understanding
-              </StyledTableCell>
-              <StyledTableCell sx={{ width: 130 }}>Support</StyledTableCell>
+              <StyledTableCell>Feeling</StyledTableCell>
+              <StyledTableCell>Understanding</StyledTableCell>
+              <StyledTableCell>Support</StyledTableCell>
               <StyledTableCell>Comments</StyledTableCell>
-              <StyledTableCell
-                size="small"
-                sx={{ width: 130 }}
-              ></StyledTableCell>
+              <StyledTableCell size="small"></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
