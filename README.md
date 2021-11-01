@@ -14,10 +14,11 @@ In addition, there is an Admin view that requests all the feedback data from the
 
 The biggest challenge in this project has been trying to implement a stepper for visual indication of form progress. More specifically, ensuring the stepper 'knows' which component the user is viewing, even when using the browser's 'Back' button. I've added some reducers that could potentially help with this.
 
+Deployed version of the app can be found [here](https://gruesome-web-81167.herokuapp.com/)
+
 TODO:
 
 - [ ] Implement a stepper
-- [ ] Deploy to Heroku
 
 ### Prerequisites
 
