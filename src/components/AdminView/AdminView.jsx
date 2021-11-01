@@ -15,6 +15,10 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+import LightbulbIcon from "@mui/icons-material/Lightbulb";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CommentIcon from "@mui/icons-material/Comment";
 
 // custom table cell function taken from https://mui.com/components/tables/ and tweaked
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -89,14 +93,43 @@ export default function AdminView({ getPage }) {
         <Table sx={{ overflow: "scroll" }}>
           <TableHead>
             <TableRow>
-              <StyledTableCell>Feeling</StyledTableCell>
-              <StyledTableCell>Understanding</StyledTableCell>
-              <StyledTableCell>Support</StyledTableCell>
-              <StyledTableCell>Comments</StyledTableCell>
-              <StyledTableCell
-                size="small"
-                // sx={{ width: 130 }}
-              ></StyledTableCell>
+              <StyledTableCell>
+                <InsertEmoticonIcon
+                  sx={{
+                    mr: 1,
+                    verticalAlign: "middle",
+                  }}
+                />
+                Feeling
+              </StyledTableCell>
+              <StyledTableCell>
+                <LightbulbIcon
+                  sx={{
+                    mr: 1,
+                    verticalAlign: "middle",
+                  }}
+                />
+                Understanding
+              </StyledTableCell>
+              <StyledTableCell>
+                <FavoriteIcon
+                  sx={{
+                    mr: 1,
+                    verticalAlign: "middle",
+                  }}
+                />
+                Support
+              </StyledTableCell>
+              <StyledTableCell>
+                <CommentIcon
+                  sx={{
+                    mr: 1,
+                    verticalAlign: "middle",
+                  }}
+                />
+                Comments
+              </StyledTableCell>
+              <StyledTableCell size="small"></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
