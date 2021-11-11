@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useHistory } from "react-router-dom";
-import axios from "axios";
-
 import AdminFeedbackItem from "../AdminFeedbackItem/AdminFeedbackItem.jsx";
+import axios from "axios";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -22,135 +22,106 @@ import CommentIcon from "@mui/icons-material/Comment";
 
 // custom table cell function taken from https://mui.com/components/tables/ and tweaked
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.head}:last-of-type`]: {
-    width: 130,
-  },
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.head}:last-of-type`]: {
+        width: 130,
+    },
 }));
 
 export default function AdminView({ getPage }) {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const history = useHistory();
+    const location = useLocation();
+    const history = useHistory();
+    const dispatch = useDispatch();
 
-  // send the current page's pathname to the store
-  getPage(location.pathname);
+    // send the current page's pathname to the store
+    getPage(location.pathname);
 
-  // send the GET request once on page load
-  useEffect(() => {
-    getFeedback();
-  }, []);
-
-  // GET request
-  const getFeedback = () => {
-    axios
-      .get("/api/feedback")
-      .then((res) => {
-        console.log("GET Success", res.data);
-        dispatch({ type: "GET_FEEDBACK", payload: res.data });
-      })
-      .catch((err) => {
-        console.log("Error getting feedback", err);
-      });
-  };
-
-  // DELETE request
-  const deleteFeedback = (id) => {
-    axios
-      .delete(`/api/feedback/delete/${id}`)
-      .then((res) => {
-        console.log("Feedback deleted successfully");
+    // send the GET request once on page load
+    useEffect(() => {
         getFeedback();
-      })
-      .catch((err) => {
-        console.log("Error deleting feedback from the database", err);
-        alert("Unable to delete feedback!");
-      });
-  };
+    }, []);
 
-  // PUT request to toggle 'flagged' status
-  const flagFeedback = (id) => {
-    axios
-      .put(`/api/feedback/flag/${id}`)
-      .then((res) => {
-        console.log("Feedback update successful");
-        getFeedback();
-      })
-      .catch((err) => {
-        console.log("Error updateing feedback", err);
-        alert("Unable to update feedback!");
-      });
-  };
+    // GET request 
+    const getFeedback = () => {
+        axios
+            .get("/api/feedback")
+            .then((res) => {
+                console.log("GET Success", res.data);
+                dispatch({ type: "GET_FEEDBACK", payload: res.data });
+            })
+            .catch((err) => {
+                console.log("Error getting feedback", err);
+            });
+    };
 
-  const allFeedback = useSelector((store) => store.adminReducer);
+    const allFeedback = useSelector((store) => store.adminReducer);
 
-  return (
-    <Box maxWidth="lg" mx="auto">
-      <TableContainer component={Paper}>
-        <Table sx={{ overflow: "scroll" }}>
-          <TableHead>
-            <TableRow>
-              <StyledTableCell>
-                <InsertEmoticonIcon
-                  sx={{
-                    mr: 1,
-                    verticalAlign: "middle",
-                  }}
-                />
-                Feeling
-              </StyledTableCell>
-              <StyledTableCell>
-                <LightbulbIcon
-                  sx={{
-                    mr: 1,
-                    verticalAlign: "middle",
-                  }}
-                />
-                Understanding
-              </StyledTableCell>
-              <StyledTableCell>
-                <FavoriteIcon
-                  sx={{
-                    mr: 1,
-                    verticalAlign: "middle",
-                  }}
-                />
-                Support
-              </StyledTableCell>
-              <StyledTableCell>
-                <CommentIcon
-                  sx={{
-                    mr: 1,
-                    verticalAlign: "middle",
-                  }}
-                />
-                Comments
-              </StyledTableCell>
-              <StyledTableCell size="small"></StyledTableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {allFeedback.map((feedback, i) => (
-              <AdminFeedbackItem
-                key={i}
-                feedback={feedback}
-                deleteFeedback={deleteFeedback}
-                flagFeedback={flagFeedback}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Button
-        variant="contained"
-        sx={{ mt: 3 }}
-        onClick={() => history.push("/")}
-      >
-        Log Out
-      </Button>
-    </Box>
-  );
+    return (
+        <Box maxWidth="lg" mx="auto">
+            <TableContainer component={Paper}>
+                <Table sx={{ overflow: "scroll" }}>
+                    <TableHead>
+                        <TableRow>
+                            <StyledTableCell>
+                                <InsertEmoticonIcon
+                                    sx={{
+                                        mr: 1,
+                                        verticalAlign: "middle",
+                                    }}
+                                />
+                                Feeling
+                            </StyledTableCell>
+                            <StyledTableCell>
+                                <LightbulbIcon
+                                    sx={{
+                                        mr: 1,
+                                        verticalAlign: "middle",
+                                    }}
+                                />
+                                Understanding
+                            </StyledTableCell>
+                            <StyledTableCell>
+                                <FavoriteIcon
+                                    sx={{
+                                        mr: 1,
+                                        verticalAlign: "middle",
+                                    }}
+                                />
+                                Support
+                            </StyledTableCell>
+                            <StyledTableCell>
+                                <CommentIcon
+                                    sx={{
+                                        mr: 1,
+                                        verticalAlign: "middle",
+                                    }}
+                                />
+                                Comments
+                            </StyledTableCell>
+                            <StyledTableCell size="small"></StyledTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {allFeedback.map((feedback, i) => (
+                            <AdminFeedbackItem
+                                key={i}
+                                feedback={feedback}
+                                getFeedback={getFeedback}
+                            />
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Button
+                variant="contained"
+                sx={{ mt: 3 }}
+                onClick={() => history.push("/")}
+            >
+                Log Out
+            </Button>
+        </Box>
+    );
 }
