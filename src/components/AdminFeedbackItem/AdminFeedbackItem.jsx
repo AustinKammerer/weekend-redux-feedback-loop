@@ -26,7 +26,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
     // style the td's if the row is 'flagged' (feedback.flagged)
     "&.flagged td": {
-        fontWeight: "bold",
         backgroundColor: red[100]
     },
 }));
