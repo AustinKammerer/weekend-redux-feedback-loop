@@ -70,6 +70,7 @@ export default function AdminFeedbackItem({ feedback, getFeedback }) {
                         />
                     </Button>
                     <AdminDeleteFeedback
+                        getFeedback={getFeedback}
                         feedback={feedback}
                     />
                 </Stack>
