@@ -17,10 +17,6 @@ export default function Confirmation({ getPage }) {
   const handleClick = () => {
     // reset the feedback and step reducers
     dispatch({ type: "CLEAR_FEEDBACK" });
-
-    // reset the Stepper
-    // handleReset();
-    // TODO route the user back to feeling page
     history.push("/");
   };
   return (
